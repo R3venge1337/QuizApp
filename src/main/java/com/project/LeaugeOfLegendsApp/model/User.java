@@ -8,9 +8,11 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Document(collection = "users")
 @Data
+@NoArgsConstructor
 public class User {
 
 	@Id
