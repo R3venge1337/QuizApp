@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.LeaugeOfLegendsApp.model.ERole;
 import com.project.LeaugeOfLegendsApp.model.Role;
 import com.project.LeaugeOfLegendsApp.repository.RoleRepository;
 
@@ -23,7 +24,7 @@ public class RoleController {
 	
 	@GetMapping("/roles/d")
 	public Role getRoles3(){
-		return roleRepo.findByName("ROLE_ADMIN").get();
+		return roleRepo.findByName(ERole.ROLE_USER).get();
 	}
 
 }

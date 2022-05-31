@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import com.project.LeaugeOfLegendsApp.model.ERole;
 import com.project.LeaugeOfLegendsApp.model.Role;
 import com.project.LeaugeOfLegendsApp.repository.RoleRepository;
 
@@ -16,7 +17,7 @@ public class RoleService {
 	
 	private final RoleRepository roleRepository;
 	
-	public Optional<Role> findByName(String name) {
+	public Optional<Role> findByName(ERole name) {
 		return roleRepository.findByName(name);
 		
 	}

@@ -20,8 +20,8 @@ public class RoleQuery implements GraphQLQueryResolver {
 		return roleService.findAllRoles();
 	}
 
-	public Role getRoleByName(String name) {
-		return roleService.findByName(name).get();
+	public Role getRoleByName(Role name) {
+		return roleService.findByName(name.getName()).get();
 	}
 	
 };

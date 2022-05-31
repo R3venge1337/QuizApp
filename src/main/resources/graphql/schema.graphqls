@@ -1,0 +1,15 @@
+type Query {
+	getAllRoles: [Role]
+	getRoleByName(name: String): Role
+	getAllUsers(limit: Int): [User]
+	findByUsername(username: String): User
+
+}
+
+type Mutation {
+	createRole(role: RoleInput): Role
+	createUser(user: UserInput): User
+	registerUser(user: registerUserInput): String
+	authenticateUser(user: loginUserInput): JwtResponse
+	
+}

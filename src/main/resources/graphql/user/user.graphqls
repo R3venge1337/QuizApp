@@ -1,0 +1,33 @@
+type User {
+	 id: ID!
+	 username: String
+	 email: String
+	 password: String
+	 roles: [Role]
+}
+
+input UserInput {
+ 	 username: String
+	 email: String
+	 password: String
+	 roles: [RoleInput]
+}
+
+input registerUserInput {
+ 	 username: String
+	 email: String
+	 password: String
+}
+
+input loginUserInput {
+ 	 username: String
+	 password: String
+}
+
+type JwtResponse {
+	 token: String
+	 id: String
+	 username: String
+	 email: String
+	 roles: [String]
+}

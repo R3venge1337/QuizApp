@@ -13,5 +13,11 @@ import lombok.NoArgsConstructor;
 public class Role {
 	@Id
 	private String id;
-	private String name;
+	private ERole name;
+	
+	public Role(ERole roleName) {
+		this.name = roleName;
+	}
+	
+	
 }
