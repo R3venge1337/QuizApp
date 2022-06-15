@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.project.LeaugeOfLegendsApp.model.ERole;
 import com.project.LeaugeOfLegendsApp.model.Role;
 import com.project.LeaugeOfLegendsApp.service.RoleService;
 
@@ -20,8 +21,8 @@ public class RoleQuery implements GraphQLQueryResolver {
 		return roleService.findAllRoles();
 	}
 
-	public Role getRoleByName(Role name) {
-		return roleService.findByName(name.getName()).get();
+	public Role getRoleByName(ERole roleName) {
+		return roleService.findByName(roleName).orElseThrow();
 	}
 	
 };

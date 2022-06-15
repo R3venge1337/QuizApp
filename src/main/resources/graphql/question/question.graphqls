@@ -1,0 +1,65 @@
+type QuestionLang {
+	id: ID!
+	questionName: String
+	answerA: String
+	answerB: String
+	answerC: String
+	answerD: String
+	correctAnswer: String
+	createdTime: String
+	updatedTime: String
+	author: User!
+	language: Language!
+}
+
+type Question {
+	id: ID!
+	questionName: String
+	answerA: String
+	answerB: String
+	answerC: String
+	answerD: String
+	correctAnswer: String
+	createdTime: String
+	updatedTime: String
+	author: User!
+	language: Language!
+	category: Category!
+	difficulty: Difficulty!
+	audioFile:  Audio
+	imageFile: Image
+}
+
+input QuestionInput {
+	questionName: String
+	answerA: String
+	answerB: String
+	answerC: String
+	answerD: String
+	correctAnswer: String
+	language: LanguageInput
+	category: CategoryInput
+	difficulty: DifficultyInput
+	audioFile: 	AudioInput
+	imageFile: ImageInput
+}
+
+input QuestionLangInput {
+	questionName: String
+	answerA: String
+	answerB: String
+	answerC: String
+	answerD: String
+	correctAnswer: String
+	language: ELanguage!
+}
+
+
+
+
+
+
+
+
+
+

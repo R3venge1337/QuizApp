@@ -1,15 +1,38 @@
+schema {
+query: Query
+mutation: Mutation
+}
+
+scalar Byte
+scalar Upload
+
 type Query {
 	getAllRoles: [Role]
-	getRoleByName(name: String): Role
+	getRoleByName(roleName: ERole): Role
 	getAllUsers(limit: Int): [User]
 	findByUsername(username: String): User
-
+	findAllDifficulties: [Difficulty]
+	getDifficultyByName(difficultyName: EDifficulty): Difficulty
+	getCategoryByName(categoryName: ECategory): Category
+	findAllCategories: [Category]
+	findAllQuestions(limit: Int): [Question]
+	getImage(id: String): Image
+	getAudio(id: String): Audio
+	getVideo(id: String): Video
 }
 
 type Mutation {
 	createRole(role: RoleInput): Role
 	createUser(user: UserInput): User
+	createCategory(name: CategoryInput): Category
+	createLanguage(name: LanguageInput): Language
+	createDifficulty(name: DifficultyInput): Difficulty
+	createQuestion(question: QuestionInput): Question
 	registerUser(user: registerUserInput): String
 	authenticateUser(user: loginUserInput): JwtResponse
+	addImage(title: String, fileUpload: Byte): String
+	addAudio(title: String, fileUpload: Byte): String
+	addVideo(title: String, fileUpload: Byte): String
+	
 	
 }

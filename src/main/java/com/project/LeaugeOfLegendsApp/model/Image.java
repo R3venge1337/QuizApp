@@ -1,25 +1,25 @@
 package com.project.LeaugeOfLegendsApp.model;
 
+import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Document(collection = "roles")
+@Document(collection = "images")
 @Data
 @NoArgsConstructor
-public class Role {
+public class Image {
 	
 	@Id
 	private String id;
 	
-	private ERole name;
+	private String imageName;
 	
-	public Role(ERole roleName) {
-		this.name = roleName;
+    private Binary imageFile;
+
+	public Image(String imageName) {
+		this.imageName = imageName;
 	}
-	
-	
 }

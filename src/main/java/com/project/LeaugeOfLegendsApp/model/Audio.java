@@ -1,25 +1,27 @@
 package com.project.LeaugeOfLegendsApp.model;
 
+
+
+import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Document(collection = "roles")
+@Document(collection = "audios")
 @Data
 @NoArgsConstructor
-public class Role {
+public class Audio {
 	
 	@Id
 	private String id;
 	
-	private ERole name;
+	private String audioName;
 	
-	public Role(ERole roleName) {
-		this.name = roleName;
+    private Binary audioFile;
+
+	public Audio(String audioName) {
+		this.audioName = audioName;
 	}
-	
-	
 }

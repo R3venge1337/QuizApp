@@ -1,25 +1,22 @@
 package com.project.LeaugeOfLegendsApp.model;
 
+import java.io.InputStream;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Document(collection = "roles")
+@Document(collection = "videos")
 @Data
 @NoArgsConstructor
-public class Role {
+public class Video {
 	
 	@Id
 	private String id;
 	
-	private ERole name;
+	private String videoName;
 	
-	public Role(ERole roleName) {
-		this.name = roleName;
-	}
-	
-	
+    private InputStream videoFile; 
 }

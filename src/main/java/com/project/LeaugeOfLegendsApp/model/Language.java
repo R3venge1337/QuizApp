@@ -3,22 +3,21 @@ package com.project.LeaugeOfLegendsApp.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Document(collection = "roles")
+@Document(collection = "languages")
 @Data
 @NoArgsConstructor
-public class Role {
+public class Language {
 	
 	@Id
 	private String id;
 	
-	private ERole name;
-	
-	public Role(ERole roleName) {
-		this.name = roleName;
+	private ELanguage name;
+
+	public Language(ELanguage language) {
+		this.name = language;
 	}
 	
 	

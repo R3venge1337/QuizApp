@@ -3,23 +3,21 @@ package com.project.LeaugeOfLegendsApp.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Document(collection = "roles")
+@Document(collection = "difficulty")
 @Data
 @NoArgsConstructor
-public class Role {
-	
+public class Difficulty {
+
 	@Id
 	private String id;
-	
-	private ERole name;
-	
-	public Role(ERole roleName) {
-		this.name = roleName;
+
+	private EDifficulty name;
+
+	public Difficulty(EDifficulty difficulty) {
+		this.name = difficulty;
 	}
-	
-	
+
 }

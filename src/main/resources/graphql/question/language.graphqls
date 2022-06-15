@@ -1,0 +1,11 @@
+type Language {
+	id: ID!
+	name: ELanguage
+}
+enum ELanguage {
+  	 PL, EN
+
+}
+input LanguageInput {
+	name: ELanguage
+}

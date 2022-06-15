@@ -9,6 +9,8 @@ import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,34 +23,51 @@ import com.project.LeaugeOfLegendsApp.model.Role;
 import com.project.LeaugeOfLegendsApp.model.User;
 import com.project.LeaugeOfLegendsApp.repository.RoleRepository;
 import com.project.LeaugeOfLegendsApp.repository.UserRepository;
+import com.project.LeaugeOfLegendsApp.util.CustomUserDetails;
 import com.project.LeaugeOfLegendsApp.util.JwtResponse;
-import com.project.LeaugeOfLegendsApp.util.JwtUtils;
+import com.project.LeaugeOfLegendsApp.util.JwtTokenUtil;
 import com.project.LeaugeOfLegendsApp.util.LoginRequest;
 import com.project.LeaugeOfLegendsApp.util.MessageResponse;
 import com.project.LeaugeOfLegendsApp.util.SignupRequest;
-import com.project.LeaugeOfLegendsApp.util.UserDetailsImpl;
+import com.project.LeaugeOfLegendsApp.util.UserDetailsServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-
+	
+	
 	private final AuthenticationManager authenticationManager;
+	
 	private final UserRepository userRepository;
 	private final RoleRepository roleRepository;
 	private final PasswordEncoder encoder;
-	private final JwtUtils jwtUtils;
+	private final UserDetailsServiceImpl userDetailsService;
+	private final JwtTokenUtil jwtTokenUtil;
 
-	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		String jwt = jwtUtils.generateJwtToken(authentication);
 
-		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) throws Exception {		
+		
+		authenticate(loginRequest.getUsername(),loginRequest.getPassword());
+		
+		Authentication auth = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),loginRequest.getPassword()));
+		
+		//System.out.println("Auth: " + auth.getPrincipal());
+
+		CustomUserDetails userDetails =  (CustomUserDetails) userDetailsService.loadUserByUsername(loginRequest.getUsername());
+		
+		String jwt = jwtTokenUtil.generateToken(userDetails);
+		
+		/*System.out.println("authenticateUser method userDetails:  " + userDetails.getUsername() + " " 
+				+ userDetails.getPassword() + " " + userDetails.getEmail() );
+				*/
+		
 		List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
 				.collect(Collectors.toList());
+		
+		SecurityContextHolder.getContext().setAuthentication(auth);
+		
 		return ResponseEntity.ok(
 				new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
 	}
@@ -70,23 +89,18 @@ public class AuthService {
 				.orElseThrow(() -> new RuntimeException("Error: Role user is not found."));
 		roles.add(userRole);
 
-		/*
-		 * if (strRoles == null) { Role userRole =
-		 * roleRepository.findByName("ROLE_USER") .orElseThrow(() -> new
-		 * RuntimeException("Error: Role is not found.")); roles.add(userRole); } else {
-		 * strRoles.forEach(role -> { switch (role.getName()) { case "admin": Role
-		 * adminRole = roleRepository.findByName("ROLE_ADMIN") .orElseThrow(() -> new
-		 * RuntimeException("Error: Role is not found.")); roles.add(adminRole); break;
-		 * case "mod": Role modRole = roleRepository.findByName("ROLE_MOD")
-		 * .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-		 * roles.add(modRole); break; default: Role userRole =
-		 * roleRepository.findByName("ROLE_USER") .orElseThrow(() -> new
-		 * RuntimeException("Error: Role is not found.")); roles.add(userRole); } }); }
-		 */
 		user.setRoles(roles);
 		userRepository.insert(user);
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
-
 	}
-
+	
+	private void authenticate(String username, String password) throws Exception {
+		try {
+			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+		} catch (DisabledException e) {
+			throw new Exception("USER_DISABLED", e);
+		} catch (BadCredentialsException e) {
+			throw new Exception("INVALID_CREDENTIALS", e);
+		}
+	}
 }

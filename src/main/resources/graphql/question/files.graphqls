@@ -1,0 +1,32 @@
+type Audio {
+	id: ID!
+	audioName: String
+	audioFile: String
+}
+
+input AudioInput {
+	audioName: String
+	audioFile: String
+}
+
+type Image {
+	id: ID!
+	imageName: String
+	imageFile: String
+}
+
+input ImageInput {
+	videoName: String
+	videoFile: String
+}
+
+type Video {
+	id: ID!
+	videoName: String
+	videoFile: String
+}
+
+input VideoInput {
+	videoName: String
+	videoFile: String
+}

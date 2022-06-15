@@ -1,0 +1,13 @@
+type Category {
+	id: ID!
+	name: ECategory
+}
+
+enum ECategory {
+  	 GAMEPLAY, LORE, CHARACTERS, ESPORT, ITEMS
+
+}
+
+input CategoryInput {
+ 	name: ECategory
+}

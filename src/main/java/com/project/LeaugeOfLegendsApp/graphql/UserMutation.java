@@ -1,5 +1,6 @@
 package com.project.LeaugeOfLegendsApp.graphql;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
 import com.project.LeaugeOfLegendsApp.model.User;
@@ -27,7 +28,9 @@ public class UserMutation implements GraphQLMutationResolver {
 		return  authService.registerUser(signupRequest).getBody().toString();
 	}
 	
-	public JwtResponse authenticateUser(LoginRequest loginRequest){
-		return  (JwtResponse) authService.authenticateUser(loginRequest).getBody();
+	@PreAuthorize("isAnonymous()")
+	public JwtResponse authenticateUser(LoginRequest loginRequest) throws Exception{
+		return (JwtResponse) authService.authenticateUser(loginRequest).getBody();
+	
 	}
 }

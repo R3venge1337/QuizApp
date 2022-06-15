@@ -1,0 +1,12 @@
+type Difficulty {
+	id: ID!
+	name: EDifficulty
+}
+
+enum EDifficulty {
+  		EASY, MEDIUM, HARD, SUPER_HARD	
+}
+
+input DifficultyInput {
+	name: EDifficulty
+}
