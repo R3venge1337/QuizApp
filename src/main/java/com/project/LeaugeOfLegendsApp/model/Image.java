@@ -22,4 +22,11 @@ public class Image {
 	public Image(String imageName) {
 		this.imageName = imageName;
 	}
+
+	public Image(String imageName, Binary imageFile) {
+		this.imageName = imageName;
+		this.imageFile = imageFile;
+	}
+	
+	
 }

@@ -2,6 +2,8 @@ package com.project.LeaugeOfLegendsApp.service;
 
 import java.io.IOException;
 
+import javax.servlet.http.Part;
+
 import org.bson.BsonBinarySubType;
 import org.bson.types.Binary;
 import org.bson.types.ObjectId;
@@ -10,7 +12,6 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsOperations;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -36,22 +37,19 @@ public class FilesService {
 	    private final ImageRepository imageRepository;
 	    
 	    
-	    public String addImage(String title, MultipartFile file) throws IOException { 
-	        Image photo = new Image(title); 
-	        photo.setImageFile(
-	          new Binary(BsonBinarySubType.BINARY, file.getBytes())); 
+	    public String addImage(Part file) throws IOException { 
+	    	Image photo = new Image(file.getSubmittedFileName(),new Binary(BsonBinarySubType.BINARY, file.getInputStream().readAllBytes()));
 	        photo = imageRepository.insert(photo); 
-	        return photo.getId(); 
+	        return photo.getId();
+	    	
 	    }
 
 	    public Image getImage(String id) { 
 	        return imageRepository.findById(id).get(); 
 	    }
 	    
-	    public String addAudio(String title, MultipartFile file) throws IOException { 
-	        Audio audioFile = new Audio(title); 
-	        audioFile.setAudioFile(
-	          new Binary(BsonBinarySubType.BINARY, file.getBytes())); 
+	    public String addAudio(Part file) throws IOException { 
+	        Audio audioFile = new Audio(file.getSubmittedFileName(),new Binary(BsonBinarySubType.BINARY, file.getInputStream().readAllBytes())); 
 	        audioFile = audioRepository.insert(audioFile); 
 	        return audioFile.getId(); 
 	    }
@@ -60,19 +58,19 @@ public class FilesService {
 	        return audioRepository.findById(id).get(); 
 	    }
 	    
-	    public String addVideo(String title, MultipartFile file) throws IOException { 
+	    public String addVideo(Part file) throws IOException { 
 	        DBObject metaData = new BasicDBObject(); 
 	        metaData.put("type", "video"); 
-	        metaData.put("title", title); 
 	        ObjectId id = gridFsTemplate.store(
-	          file.getInputStream(), file.getName(), file.getContentType(), metaData); 
+	          file.getInputStream(), file.getSubmittedFileName(), file.getContentType(), metaData); 
 	        return id.toString(); 
 	    }
 	    
 	    public Video getVideo(String id) throws IllegalStateException, IOException { 
 	        GridFSFile file = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(id))); 
 	        Video video = new Video(); 
-	        video.setVideoName(file.getMetadata().get("title").toString()); 
+	        video.setId(file.getId().toString());
+	        video.setVideoName(file.getFilename()); 
 	        video.setVideoFile(operations.getResource(file).getInputStream());
 	        return video; 
 	    }

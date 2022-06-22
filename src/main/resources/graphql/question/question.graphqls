@@ -40,8 +40,6 @@ input QuestionInput {
 	language: LanguageInput
 	category: CategoryInput
 	difficulty: DifficultyInput
-	audioFile: 	AudioInput
-	imageFile: ImageInput
 }
 
 input QuestionLangInput {

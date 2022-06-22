@@ -1,6 +1,6 @@
 schema {
-query: Query
-mutation: Mutation
+	query: Query
+	mutation: Mutation
 }
 
 scalar Byte
@@ -19,6 +19,8 @@ type Query {
 	getImage(id: String): Image
 	getAudio(id: String): Audio
 	getVideo(id: String): Video
+	findAllLanguages:[Language]
+	findLanguageByName(languageName: ELanguage): Language
 }
 
 type Mutation {
@@ -27,12 +29,12 @@ type Mutation {
 	createCategory(name: CategoryInput): Category
 	createLanguage(name: LanguageInput): Language
 	createDifficulty(name: DifficultyInput): Difficulty
-	createQuestion(question: QuestionInput): Question
+	createQuestion(question: QuestionInput,audioFile: Upload,imageFile: Upload,videoFile: Upload): Question
 	registerUser(user: registerUserInput): String
 	authenticateUser(user: loginUserInput): JwtResponse
-	addImage(title: String, fileUpload: Byte): String
-	addAudio(title: String, fileUpload: Byte): String
-	addVideo(title: String, fileUpload: Byte): String
+	addImage(file: Upload): String
+	addAudio(file: Upload): String
+	addVideo(file: Upload): String
 	
 	
 }

@@ -3,8 +3,9 @@ package com.project.LeaugeOfLegendsApp.graphql;
 
 import java.io.IOException;
 
+import javax.servlet.http.Part;
+
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.project.LeaugeOfLegendsApp.service.FilesService;
 
@@ -17,15 +18,15 @@ public class FilesMutation implements GraphQLMutationResolver {
 	
 	private final FilesService fileService;
 	
-	public String addImage(String title, MultipartFile file) throws IOException {
-		return fileService.addImage(title, file);
+	public String addImage(Part file) throws IOException {
+		return fileService.addImage(file);
 	}
 	
-	public String addAudio(String title, MultipartFile file) throws IOException {
-		return fileService.addAudio(title, file);
+	public String addAudio(Part file) throws IOException {
+		return fileService.addAudio(file);
 	}
 	
-	public String addVideo(String title, MultipartFile file) throws IOException {
-		return fileService.addVideo(title, file);
+	public String addVideo(Part file) throws IOException {
+		return fileService.addVideo(file);
 	}
 }

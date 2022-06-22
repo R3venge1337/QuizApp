@@ -24,4 +24,11 @@ public class Audio {
 	public Audio(String audioName) {
 		this.audioName = audioName;
 	}
+
+	public Audio(String audioName, Binary audioFile) {
+		this.audioName = audioName;
+		this.audioFile = audioFile;
+	}
+	
+	
 }

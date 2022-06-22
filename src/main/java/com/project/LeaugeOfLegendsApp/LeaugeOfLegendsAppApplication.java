@@ -11,5 +11,11 @@ public class LeaugeOfLegendsAppApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LeaugeOfLegendsAppApplication.class, args);
 	}
-
+	
+	/*
+	@Autowired
+	void setMapKeyDotReplacement(MappingMongoConverter mappingMongoConverter) {
+	    mappingMongoConverter.setMapKeyDotReplacement("_");
+	}
+	*/
 }

@@ -29,6 +29,7 @@ public class EmailScalar {
                 public Object parseLiteral(Object input) {
                     return parseEmailFromAstLiteral(input);
                 }
+                
             })
             .build();
 

@@ -3,6 +3,7 @@ package com.project.LeaugeOfLegendsApp.model;
 import java.time.Instant;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -34,20 +35,24 @@ public class Question {
 	private Instant createdTime;
 
 	private Instant updatedTime;
-
+	
+	@DBRef
 	private Language language;
-
+	@DBRef
 	private Category category;
-
+	@DBRef
 	private Difficulty difficulty;
-
+	@DBRef
 	private Audio audioFile;
-
+	@DBRef
 	private Image imageFile;
+	@DBRef
+	private Video videoFile;
 
+	@PersistenceCreator
 	public Question(String questionName, String answerA, String answerB, String answerC, String answerD,
 			String correctAnswer, User author, Instant createdTime, Instant updatedTime, Language language,
-			Category category, Difficulty difficulty, Audio audioFile, Image imageFile) {
+			Category category, Difficulty difficulty, Audio audioFile, Image imageFile, Video videoFile) {
 		this.questionName = questionName;
 		this.answerA = answerA;
 		this.answerB = answerB;
@@ -62,6 +67,7 @@ public class Question {
 		this.difficulty = difficulty;
 		this.audioFile = audioFile;
 		this.imageFile = imageFile;
+		this.videoFile = videoFile;
 	}
 
 	public Question(String questionName, String answerA, String answerB, String answerC, String answerD,

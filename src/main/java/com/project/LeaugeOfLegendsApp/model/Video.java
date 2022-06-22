@@ -18,5 +18,12 @@ public class Video {
 	
 	private String videoName;
 	
-    private InputStream videoFile; 
+    private InputStream videoFile;
+    
+	public Video(String videoName, InputStream videoFile) {
+		this.videoName = videoName;
+		this.videoFile = videoFile;
+	} 
+    
+    
 }

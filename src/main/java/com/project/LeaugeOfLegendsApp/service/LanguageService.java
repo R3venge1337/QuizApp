@@ -1,5 +1,7 @@
 package com.project.LeaugeOfLegendsApp.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.project.LeaugeOfLegendsApp.model.ELanguage;
@@ -13,6 +15,10 @@ import lombok.RequiredArgsConstructor;
 public class LanguageService {
 	
 	private final LanguageRepository languageRepository;
+	
+	public List<Language> findAllLanguages(){
+		return languageRepository.findAll();
+	}
 	
 	public Language createLanguage(Language lang) {
 		return languageRepository.insert(lang);
