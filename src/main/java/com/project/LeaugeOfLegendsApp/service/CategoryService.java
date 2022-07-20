@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.project.LeaugeOfLegendsApp.exceptions.CategoryNotFoundException;
 import com.project.LeaugeOfLegendsApp.model.Category;
 import com.project.LeaugeOfLegendsApp.model.ECategory;
 import com.project.LeaugeOfLegendsApp.repository.CategoryRepository;
@@ -25,7 +26,8 @@ public class CategoryService {
 	}
 	
 	public Category getCategoryByName(ECategory categoryName){
-		return categoryRepository.getCategoryByName(categoryName).orElseThrow();
+		return categoryRepository.getCategoryByName(categoryName)
+					.orElseThrow(() -> new CategoryNotFoundException("Category cannot be found with this " + categoryName));
 	}
 	
 

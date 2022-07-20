@@ -36,6 +36,7 @@ public class FilesService {
 	    
 	    private final ImageRepository imageRepository;
 	    
+	    //,audioFile: Upload,imageFile: Upload,videoFile: Upload
 	    
 	    public String addImage(Part file) throws IOException { 
 	    	Image photo = new Image(file.getSubmittedFileName(),new Binary(BsonBinarySubType.BINARY, file.getInputStream().readAllBytes()));

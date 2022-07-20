@@ -29,7 +29,7 @@ type Mutation {
 	createCategory(name: CategoryInput): Category
 	createLanguage(name: LanguageInput): Language
 	createDifficulty(name: DifficultyInput): Difficulty
-	createQuestion(question: QuestionInput,audioFile: Upload,imageFile: Upload,videoFile: Upload): Question
+	createQuestion(question: QuestionInput,audioFile:Upload,imageFile:Upload,videoFile:Upload): Question
 	registerUser(user: registerUserInput): String
 	authenticateUser(user: loginUserInput): JwtResponse
 	addImage(file: Upload): String

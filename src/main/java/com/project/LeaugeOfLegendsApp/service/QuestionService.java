@@ -4,11 +4,13 @@ import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-
+import com.project.LeaugeOfLegendsApp.exceptions.CategoryNotFoundException;
+import com.project.LeaugeOfLegendsApp.exceptions.DifficultyNotFoundException;
+import com.project.LeaugeOfLegendsApp.exceptions.LanguageNotFoundException;
+import com.project.LeaugeOfLegendsApp.exceptions.UserNotFoundException;
 import com.project.LeaugeOfLegendsApp.model.Category;
 import com.project.LeaugeOfLegendsApp.model.Difficulty;
 import com.project.LeaugeOfLegendsApp.model.Language;
@@ -31,24 +33,24 @@ public class QuestionService {
 	private final CategoryRepository categoryRepository;
 	private final DifficultyRepository difficultyRepository;
 	private final UserRepository userRepository;
-
-
-
 	public Question createQuestion(Question questionObject) {
 
 		User user = userRepository
 				.findByUsername(
 						SecurityContextHolder.getContextHolderStrategy().getContext().getAuthentication().getName())
-				.orElseThrow();
-		Language lang = languageRepository.findByName(questionObject.getLanguage().getName()).orElseThrow();
-		Category cat = categoryRepository.getCategoryByName(questionObject.getCategory().getName()).orElseThrow();
-		Difficulty diff = difficultyRepository.findByName(questionObject.getDifficulty().getName()).orElseThrow();
-		
+				.orElseThrow(()-> new UserNotFoundException("User not exist"));
+		Language lang = languageRepository.findByName(questionObject.getLanguage().getName())
+				.orElseThrow(() -> new LanguageNotFoundException("Language not exist - " + questionObject.getLanguage().getName()));
+		Category cat = categoryRepository.getCategoryByName(questionObject.getCategory().getName())
+				.orElseThrow(() -> new CategoryNotFoundException("Category not exist - " + questionObject.getCategory().getName()));
+		Difficulty diff = difficultyRepository.findByName(questionObject.getDifficulty().getName())
+				.orElseThrow(() -> new DifficultyNotFoundException("Difficulty not exist - " + questionObject.getDifficulty().getName()));
+
 		Question createQuestion = new Question(questionObject.getQuestionName(), questionObject.getAnswerA(),
 				questionObject.getAnswerB(), questionObject.getAnswerC(), questionObject.getAnswerD(),
 				questionObject.getCorrectAnswer(), user, Instant.now(), Instant.now(), lang, cat, diff,
-				questionObject.getAudioFile(),questionObject.getImageFile(),questionObject.getVideoFile());
-		
+				questionObject.getAudioFile(), questionObject.getImageFile(), questionObject.getVideoFile());
+
 		return questionRepository.insert(createQuestion);
 	}
 

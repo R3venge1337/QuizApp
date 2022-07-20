@@ -7,12 +7,16 @@ import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Document(collection = "questions")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Question {
 
 	@Id
@@ -48,6 +52,9 @@ public class Question {
 	private Image imageFile;
 	@DBRef
 	private Video videoFile;
+	
+	
+	
 
 	@PersistenceCreator
 	public Question(String questionName, String answerA, String answerB, String answerC, String answerD,
@@ -86,6 +93,25 @@ public class Question {
 		this.category = category;
 		this.difficulty = difficulty;
 	}
+
+	public Question(String id, String questionName, String correctAnswer, User author, Instant createdTime,
+			Instant updatedTime, Language language, Category category, Difficulty difficulty, Audio audioFile,
+			Image imageFile, Video videoFile) {
+		this.id = id;
+		this.questionName = questionName;
+		this.correctAnswer = correctAnswer;
+		this.author = author;
+		this.createdTime = createdTime;
+		this.updatedTime = updatedTime;
+		this.language = language;
+		this.category = category;
+		this.difficulty = difficulty;
+		this.audioFile = audioFile;
+		this.imageFile = imageFile;
+		this.videoFile = videoFile;
+	}
+
+	
 
 	
 
