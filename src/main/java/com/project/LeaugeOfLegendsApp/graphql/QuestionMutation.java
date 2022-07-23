@@ -41,4 +41,9 @@ public class QuestionMutation implements GraphQLMutationResolver {
 		System.out.println("CreateQuestion: " +  question);
 		return questionService.createQuestion(questionMapper.mapOfDTO(question));
 	}
+	
+	public boolean createQuestionFromJsonFile(Part file) throws IllegalStateException, IOException {
+	 questionService.createQuestionFromJsonFile(file);
+	return true;
+	}
 }

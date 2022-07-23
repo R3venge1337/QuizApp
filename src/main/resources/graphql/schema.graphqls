@@ -30,6 +30,7 @@ type Mutation {
 	createLanguage(name: LanguageInput): Language
 	createDifficulty(name: DifficultyInput): Difficulty
 	createQuestion(question: QuestionInput,audioFile:Upload,imageFile:Upload,videoFile:Upload): Question
+	createQuestionFromJsonFile(file:Upload): Boolean
 	registerUser(user: registerUserInput): String
 	authenticateUser(user: loginUserInput): JwtResponse
 	addImage(file: Upload): String
