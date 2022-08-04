@@ -1,17 +1,20 @@
 package com.project.LeaugeOfLegendsApp.model;
 
 
-
 import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Document(collection = "audios")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Audio {
 	
 	@Id

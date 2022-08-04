@@ -1,7 +1,7 @@
 package com.project.LeaugeOfLegendsApp.model;
 
-import java.io.InputStream;
 
+import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -18,9 +18,9 @@ public class Video {
 	
 	private String videoName;
 	
-    private InputStream videoFile;
+    private Binary videoFile;
     
-	public Video(String videoName, InputStream videoFile) {
+	public Video(String videoName, Binary videoFile) {
 		this.videoName = videoName;
 		this.videoFile = videoFile;
 	} 

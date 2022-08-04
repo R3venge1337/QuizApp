@@ -6,21 +6,14 @@ import javax.servlet.http.Part;
 
 import org.bson.BsonBinarySubType;
 import org.bson.types.Binary;
-import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.gridfs.GridFsOperations;
-import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.stereotype.Service;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
-import com.mongodb.client.gridfs.model.GridFSFile;
 import com.project.LeaugeOfLegendsApp.model.Audio;
 import com.project.LeaugeOfLegendsApp.model.Image;
 import com.project.LeaugeOfLegendsApp.model.Video;
 import com.project.LeaugeOfLegendsApp.repository.AudioRepository;
 import com.project.LeaugeOfLegendsApp.repository.ImageRepository;
+import com.project.LeaugeOfLegendsApp.repository.VideoRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -28,13 +21,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class FilesService {
 	
-	    private final GridFsTemplate gridFsTemplate;
+	    //private final GridFsTemplate gridFsTemplate;
 
-	    private final GridFsOperations operations;
+	   // private final GridFsOperations operations;
 	    
 	    private final AudioRepository audioRepository;
 	    
 	    private final ImageRepository imageRepository;
+	    
+	    private final VideoRepository videoRepository;
 	    
 	    //,audioFile: Upload,imageFile: Upload,videoFile: Upload
 	    
@@ -59,6 +54,7 @@ public class FilesService {
 	        return audioRepository.findById(id).get(); 
 	    }
 	    
+	    /*
 	    public String addVideo(Part file) throws IOException { 
 	        DBObject metaData = new BasicDBObject(); 
 	        metaData.put("type", "video"); 
@@ -74,5 +70,20 @@ public class FilesService {
 	        video.setVideoName(file.getFilename()); 
 	        video.setVideoFile(operations.getResource(file).getInputStream());
 	        return video; 
+	    }
+	    */
+	    
+	    public String addVideo(Part file) throws IOException { 
+	    	Video video = new Video(file.getSubmittedFileName(),new Binary(BsonBinarySubType.BINARY, file.getInputStream().readAllBytes()));
+	        video = videoRepository.insert(video); 
+	        return video.getId();
+	    }
+	    
+	    public Video getVideo(String id) throws IllegalStateException, IOException { 
+	    	return videoRepository.findById(id).get();
+	    }
+	    
+	    public Video getVideoByName(String name) throws IllegalStateException, IOException { 
+	       return videoRepository.findVideoByVideoName(name);
 	    }
 }

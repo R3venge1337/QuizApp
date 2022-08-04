@@ -6,7 +6,6 @@ type Audio {
 
 input AudioInput {
 	audioName: String
-	audioFile: String
 }
 
 type Image {
@@ -16,8 +15,7 @@ type Image {
 }
 
 input ImageInput {
-	videoName: String
-	videoFile: String
+	imageName: String
 }
 
 type Video {
@@ -28,5 +26,4 @@ type Video {
 
 input VideoInput {
 	videoName: String
-	videoFile: String
 }

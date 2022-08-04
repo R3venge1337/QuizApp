@@ -20,16 +20,22 @@ import com.project.LeaugeOfLegendsApp.exceptions.CategoryNotFoundException;
 import com.project.LeaugeOfLegendsApp.exceptions.DifficultyNotFoundException;
 import com.project.LeaugeOfLegendsApp.exceptions.LanguageNotFoundException;
 import com.project.LeaugeOfLegendsApp.exceptions.UserNotFoundException;
+import com.project.LeaugeOfLegendsApp.model.Audio;
 import com.project.LeaugeOfLegendsApp.model.Category;
 import com.project.LeaugeOfLegendsApp.model.Difficulty;
+import com.project.LeaugeOfLegendsApp.model.Image;
 import com.project.LeaugeOfLegendsApp.model.Language;
 import com.project.LeaugeOfLegendsApp.model.Question;
 import com.project.LeaugeOfLegendsApp.model.User;
+import com.project.LeaugeOfLegendsApp.model.Video;
+import com.project.LeaugeOfLegendsApp.repository.AudioRepository;
 import com.project.LeaugeOfLegendsApp.repository.CategoryRepository;
 import com.project.LeaugeOfLegendsApp.repository.DifficultyRepository;
+import com.project.LeaugeOfLegendsApp.repository.ImageRepository;
 import com.project.LeaugeOfLegendsApp.repository.LanguageRepository;
 import com.project.LeaugeOfLegendsApp.repository.QuestionRepository;
 import com.project.LeaugeOfLegendsApp.repository.UserRepository;
+import com.project.LeaugeOfLegendsApp.repository.VideoRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -42,6 +48,9 @@ public class QuestionService {
 	private final CategoryRepository categoryRepository;
 	private final DifficultyRepository difficultyRepository;
 	private final UserRepository userRepository;
+	private final ImageRepository imageRepository;
+	private final AudioRepository audioRepository;
+	private final VideoRepository videoRepository;
 
 	public Question createQuestion(Question questionObject) {
 
@@ -81,32 +90,42 @@ public class QuestionService {
 
 		// convert JSON array to list of questions
 		List<Question> questionsObject = Arrays.asList(mapper.readValue(file.getInputStream(), Question[].class));
-		
-		 questionsObject.stream().forEach(x -> {
-			 
-				User user = userRepository
-						.findByUsername(
-								SecurityContextHolder.getContextHolderStrategy().getContext().getAuthentication().getName())
-						.orElseThrow(() -> new UserNotFoundException("User not exist"));
-				Language lang = languageRepository.findByName(x.getLanguage().getName()).orElseThrow(
-						() -> new LanguageNotFoundException("Language not exist - " + x.getLanguage().getName()));
-				Category cat = categoryRepository.getCategoryByName(x.getCategory().getName()).orElseThrow(
-						() -> new CategoryNotFoundException("Category not exist - " + x.getCategory().getName()));
-				Difficulty diff = difficultyRepository.findByName(x.getDifficulty().getName())
-						.orElseThrow(() -> new DifficultyNotFoundException(
-								"Difficulty not exist - " + x.getDifficulty().getName()));
-				x.setAuthor(user);
-				x.setLanguage(lang);
-				x.setCategory(cat);
-				x.setDifficulty(diff);
-				questionRepository.insert(x);
-		 });
-		
-	
+		//questionsObject.forEach(System.out::println);
 
-		// print books
-		//questions.forEach(System.out::println);
+		questionsObject.stream().forEach(x -> {
 
-		
+			User user = userRepository
+					.findByUsername(
+							SecurityContextHolder.getContextHolderStrategy().getContext().getAuthentication().getName())
+					.orElseThrow(() -> new UserNotFoundException("User not exist"));
+			Language lang = languageRepository.findByName(x.getLanguage().getName()).orElseThrow(
+					() -> new LanguageNotFoundException("Language not exist - " + x.getLanguage().getName()));
+			Category cat = categoryRepository.getCategoryByName(x.getCategory().getName()).orElseThrow(
+					() -> new CategoryNotFoundException("Category not exist - " + x.getCategory().getName()));
+			Difficulty diff = difficultyRepository.findByName(x.getDifficulty().getName()).orElseThrow(
+					() -> new DifficultyNotFoundException("Difficulty not exist - " + x.getDifficulty().getName()));
+
+			if (!Objects.isNull(x.getAudioFile())) {
+				Audio audio = audioRepository.findAudioByAudioName(x.getAudioFile().getAudioName());
+				x.setAudioFile(audio);
+			}
+
+			if (!Objects.isNull(x.getImageFile())) {
+				Image img = imageRepository.findImageByImageName(x.getImageFile().getImageName());
+				x.setImageFile(img);
+			}
+			
+			if (!Objects.isNull(x.getVideoFile())) {
+				Video video = videoRepository.findVideoByVideoName(x.getVideoFile().getVideoName());
+				x.setVideoFile(video);
+			}
+
+			x.setAuthor(user);
+			x.setLanguage(lang);
+			x.setCategory(cat);
+			x.setDifficulty(diff);
+
+			questionRepository.insert(x);
+		});
 	}
 }
