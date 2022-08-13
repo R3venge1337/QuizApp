@@ -1,0 +1,5 @@
+query{
+  findAllQuestions(limit: 10){
+    questionName
+  }
+}

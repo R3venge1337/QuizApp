@@ -10,7 +10,6 @@ import com.project.LeaugeOfLegendsApp.model.ECategory;
 import com.project.LeaugeOfLegendsApp.repository.CategoryRepository;
 
 import lombok.RequiredArgsConstructor;
-
 @Service
 @RequiredArgsConstructor
 public class CategoryService {

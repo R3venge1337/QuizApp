@@ -1,0 +1,5 @@
+query{
+  getCategoryByName(categoryName: ITEMS){
+    name
+  }
+}

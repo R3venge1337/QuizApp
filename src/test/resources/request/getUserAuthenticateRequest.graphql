@@ -1,0 +1,8 @@
+mutation {
+  authenticateUser(user:{username: "revenge 3",password: "zima27123!"}){
+  	token
+    username
+    email
+    roles
+  }
+}

@@ -33,4 +33,5 @@ public class UserMutation implements GraphQLMutationResolver {
 		return (JwtResponse) authService.authenticateUser(loginRequest).getBody();
 	
 	}
+	
 }

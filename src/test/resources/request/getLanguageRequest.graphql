@@ -1,0 +1,5 @@
+query {
+  findLanguageByName(languageName:PL) {
+    name
+  }
+}

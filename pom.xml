@@ -24,7 +24,12 @@
 		<graphql-spring-boot-starter-test>12.0.0</graphql-spring-boot-starter-test>
 	</properties>
 	<dependencies>
-		
+	
+	 <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-graphql</artifactId>
+    </dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -47,18 +52,17 @@
 			<artifactId>graphql-java-servlet</artifactId>
 			<version>${graphql-java-servlet}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.graphql-java</groupId>
+			<artifactId>graphql-java-extended-scalars</artifactId>
+			<version>${graphql-java-extended-scalars}</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>${jackson-databind}</version>
-		</dependency>
-
-
-		<dependency>
-			<groupId>com.graphql-java</groupId>
-			<artifactId>graphql-java-extended-scalars</artifactId>
-			<version>${graphql-java-extended-scalars}</version>
 		</dependency>
 
 		<dependency>
@@ -121,13 +125,27 @@
 			<artifactId>spring-graphql-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<repositories>
+
+		<repository>
+			<id>oss-snapshot-local</id>
+			<name>jfrog</name>
+			<url>https://oss.jfrog.org/artifactory/oss-snapshot-local</url>
+			<snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+	</repositories>
+	
+	
 
 	<build>
 		<plugins>
