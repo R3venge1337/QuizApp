@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.http.Part;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Component;
 
 import com.project.LeaugeOfLegendsApp.dto.QuestionDTO;
@@ -21,16 +22,18 @@ import lombok.RequiredArgsConstructor;
 @Component
 @RequiredArgsConstructor
 public class QuestionMutation implements GraphQLMutationResolver {
-	
+
 	private final QuestionService questionService;
-	
+
 	private final FilesService fileService;
-	
+
 	private final QuestionMapper questionMapper;
 	
-	public Question createQuestion(QuestionDTO question,Part audioFile, Part imageFile, Part videoFile) throws IllegalStateException, IOException {
-		
-		if(audioFile != null ||  imageFile != null || videoFile != null) {
+	@Secured({"ROLE_QUESTMAKER","ROLE_ADMIN", "ROLE_SUPERADMIN"})
+	public Question createQuestion(QuestionDTO question, Part audioFile, Part imageFile, Part videoFile)
+			throws IllegalStateException, IOException {
+
+		if (audioFile != null || imageFile != null || videoFile != null) {
 			Audio audio = fileService.getAudio(fileService.addAudio(audioFile));
 			Image image = fileService.getImage(fileService.addImage(imageFile));
 			Video video = fileService.getVideo(fileService.addVideo(videoFile));
@@ -38,12 +41,17 @@ public class QuestionMutation implements GraphQLMutationResolver {
 			question.setImageFile(image);
 			question.setVideoFile(video);
 		}
-		System.out.println("CreateQuestion: " +  question);
 		return questionService.createQuestion(questionMapper.mapOfDTO(question));
 	}
 	
+	@Secured({"ROLE_QUESTMAKER","ROLE_ADMIN", "ROLE_SUPERADMIN"})
 	public boolean createQuestionFromJsonFile(Part file) throws IllegalStateException, IOException {
-	 questionService.createQuestionFromJsonFile(file);
-	return true;
+		questionService.createQuestionFromJsonFile(file);
+		return true;
+	}
+	@Secured({"ROLE_ADMIN", "ROLE_SUPERADMIN"})
+	public boolean deleteAllQuestions() {
+		questionService.deleteAllQuestions();
+		return true;
 	}
 }

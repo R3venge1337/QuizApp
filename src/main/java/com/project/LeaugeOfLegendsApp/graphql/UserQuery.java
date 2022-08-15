@@ -24,5 +24,4 @@ public class UserQuery implements GraphQLQueryResolver {
 		return userService.findByUsername(username);
 	}
 
-
 }

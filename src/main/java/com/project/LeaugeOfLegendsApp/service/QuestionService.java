@@ -74,10 +74,6 @@ public class QuestionService {
 		return questionRepository.insert(createQuestion);
 	}
 
-	public List<Question> findAllQuestions(int limit) {
-		return questionRepository.findAll().stream().limit(limit).collect(Collectors.toList());
-
-	}
 
 	public void createQuestionFromJsonFile(Part file) throws StreamReadException, DatabindException, IOException {
 
@@ -127,5 +123,14 @@ public class QuestionService {
 
 			questionRepository.insert(x);
 		});
+	}
+	
+	public List<Question> findAllQuestions(int limit) {
+		return questionRepository.findAll().stream().limit(limit).collect(Collectors.toList());
+
+	}
+	
+	public void deleteAllQuestions() {
+		questionRepository.deleteAll();
 	}
 }

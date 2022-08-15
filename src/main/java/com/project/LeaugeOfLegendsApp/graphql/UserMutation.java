@@ -1,8 +1,10 @@
 package com.project.LeaugeOfLegendsApp.graphql;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 
+import com.project.LeaugeOfLegendsApp.model.Role;
 import com.project.LeaugeOfLegendsApp.model.User;
 import com.project.LeaugeOfLegendsApp.service.AuthService;
 import com.project.LeaugeOfLegendsApp.service.UserService;
@@ -33,5 +35,17 @@ public class UserMutation implements GraphQLMutationResolver {
 		return (JwtResponse) authService.authenticateUser(loginRequest).getBody();
 	
 	}
+	
+	@Secured({"ROLE_ADMIN", "ROLE_SUPERADMIN"})
+	public User addRoleToUser(String username,Role role) {
+		return userService.addRoleToUser(username,role);
+	}
+	
+	@Secured({"ROLE_ADMIN", "ROLE_SUPERADMIN"})
+	public User deleteUserRole(String username,Role role) {
+		return userService.deleteUserRole(username,role);
+	}
+
+	
 	
 }

@@ -37,4 +37,7 @@ type Mutation {
 	addImage(file: Upload): String
 	addAudio(file: Upload): String
 	addVideo(file: Upload): String
+	addRoleToUser(username:String,role:RoleInput):User
+	deleteAllQuestions: Boolean
+	deleteUserRole(username:String,role:RoleInput):User
 }
