@@ -24,7 +24,8 @@ public class CustomUserDetails implements UserDetails {
 		this.username = user.getUsername();
 		this.password = user.getPassword();
 		this.email = user.getEmail();
-		this.authorities.add(new SimpleGrantedAuthority(user.getRoles().toString()));
+		user.getRoles().stream().map(x->x.getName().toString()).forEach(x -> this.authorities.add(new SimpleGrantedAuthority(x)));
+		//this.authorities.add(new SimpleGrantedAuthority());
 	}
 
 	@Override
