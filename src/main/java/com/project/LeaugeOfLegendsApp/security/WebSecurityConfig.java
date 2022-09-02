@@ -1,5 +1,7 @@
 package com.project.LeaugeOfLegendsApp.security;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 
 import com.project.LeaugeOfLegendsApp.util.JwtRequestFilter;
 import com.project.LeaugeOfLegendsApp.util.UserDetailsServiceImpl;
@@ -73,8 +76,15 @@ public class WebSecurityConfig {
 	*/
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		
+	       CorsConfiguration corsConfiguration = new CorsConfiguration();
+	        corsConfiguration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type","Access-Control-Allow-Origin"));
+	        corsConfiguration.setAllowedOrigins(List.of("http://127.0.0.1:5500/"));
+	        corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PUT","OPTIONS","PATCH", "DELETE"));
+	        corsConfiguration.setAllowCredentials(true);
+	        corsConfiguration.setExposedHeaders(List.of("Authorization"));
 
-		http.cors().and().csrf().disable().exceptionHandling().and().sessionManagement()
+		http.cors().configurationSource(x -> corsConfiguration).and().csrf().disable().exceptionHandling().and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().exceptionHandling()
 				.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)).and()
 				.requestMatchers((matchers) -> matchers.antMatchers("/static/**","/resources/**","/playground","/graphql"))
