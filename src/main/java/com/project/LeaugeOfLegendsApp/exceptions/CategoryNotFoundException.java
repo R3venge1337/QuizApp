@@ -7,6 +7,7 @@ import graphql.ErrorClassification;
 import graphql.ErrorType;
 import graphql.GraphQLError;
 import graphql.language.SourceLocation;
+import java.util.Collections;
 
 public class CategoryNotFoundException extends RuntimeException implements GraphQLError  {
 
@@ -17,25 +18,22 @@ public class CategoryNotFoundException extends RuntimeException implements Graph
 	 */
 	private static final long serialVersionUID = -2287760704153966451L;
 
-	public CategoryNotFoundException(String message) {
-		super(message);
+	public CategoryNotFoundException(String categoryName) {
+		super("Category cannot be found " + categoryName);
 	}
 	
 	@Override
 	public List<SourceLocation> getLocations() {
-		// TODO Auto-generated method stub
-		return null;
+		return Collections.emptyList();
 	}
 
 	@Override
 	public ErrorClassification getErrorType() {
-		// TODO Auto-generated method stub
 		return ErrorType.DataFetchingException;
 	}
 	
 	@Override
 	public Map<String, Object> getExtensions() {
-		// TODO Auto-generated method stub
 		return GraphQLError.super.getExtensions();
 	}
 

@@ -6,21 +6,23 @@ import graphql.ErrorClassification;
 import graphql.ErrorType;
 import graphql.GraphQLError;
 import graphql.language.SourceLocation;
+import java.util.Collections;
 
 public class LanguageNotFoundException  extends RuntimeException implements GraphQLError {
 
 	/**
 	 * 
 	 */
-	public LanguageNotFoundException(String message) {
-	    super(message);
-	  }
-	
 	private static final long serialVersionUID = 6773660755572283648L;
 
+	
+	public LanguageNotFoundException(String languageName) {
+	    super("Language not exist - " + languageName);
+	  }
+	
 	@Override
 	public List<SourceLocation> getLocations() {
-		return null;
+		return Collections.emptyList();
 	}
 
 	@Override

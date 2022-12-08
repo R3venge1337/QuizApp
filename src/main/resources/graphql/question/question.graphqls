@@ -29,6 +29,23 @@ input QuestionInput {
 	difficulty: DifficultyInput
 	audioFile: AudioInput
 	imageFile: ImageInput
+	videoFile: VideoInput
+	
+}
+
+input QuestionUpdateInput {
+	questionName: String
+	answerA: String
+	answerB: String
+	answerC: String
+	answerD: String
+	correctAnswer: String
+	language: LanguageInput
+	category: CategoryInput
+	difficulty: DifficultyInput
+	audioFile: AudioInput
+	imageFile: ImageInput
+	videoFile: VideoInput
 	
 }
 
