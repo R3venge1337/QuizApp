@@ -7,7 +7,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import com.project.LeaugeOfLegendsApp.service.QuestionService;
+
+import com.project.LeaugeOfLegendsApp.question.QuestionService;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = LeaugeOfLegendsAppApplication.class)
 @AutoConfigureMockMvc

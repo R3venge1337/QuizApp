@@ -7,6 +7,7 @@ import graphql.ErrorClassification;
 import graphql.ErrorType;
 import graphql.GraphQLError;
 import graphql.language.SourceLocation;
+import java.util.Collections;
 
 public class ImageNotFoundException  extends RuntimeException implements GraphQLError {
 
@@ -22,18 +23,16 @@ public class ImageNotFoundException  extends RuntimeException implements GraphQL
 
 	@Override
 	public List<SourceLocation> getLocations() {
-		return null;
+		return Collections.emptyList();
 	}
 
 	@Override
 	public ErrorClassification getErrorType() {
-		// TODO Auto-generated method stub
 		return ErrorType.DataFetchingException;
 	}
 	
 	@Override
 	public Map<String, Object> getExtensions() {
-		// TODO Auto-generated method stub
 		return GraphQLError.super.getExtensions();
 	}
 }

@@ -22,6 +22,7 @@ type Query {
 	getVideo(id: String): Video
 	findAllLanguages:[Language]
 	findLanguageByName(languageName: ELanguage): Language
+	findQuestionById(id: String):Question
 }
 
 type Mutation {
@@ -30,8 +31,9 @@ type Mutation {
 	createCategory(name: CategoryInput): Category
 	createLanguage(name: LanguageInput): Language
 	createDifficulty(name: DifficultyInput): Difficulty
-	createQuestion(question: QuestionInput,audioFile:Upload,imageFile:Upload,videoFile:Upload): Question
+	createQuestion(question: QuestionInput,imageFile:Upload,audioFile:Upload,videoFile:Upload): Question
 	createQuestionFromJsonFile(file:Upload): Boolean
+	updateQuestion(id:String,questionUpdate: QuestionUpdateInput): Question
 	registerUser(user: registerUserInput): String
 	authenticateUser(user: loginUserInput): JwtResponse
 	addImage(file: Upload): String
@@ -40,4 +42,5 @@ type Mutation {
 	addRoleToUser(username:String,role:RoleInput):User
 	deleteAllQuestions: Boolean
 	deleteUserRole(username:String,role:RoleInput):User
+	deleteQuestionById(id:String):Boolean
 }

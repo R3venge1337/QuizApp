@@ -6,6 +6,7 @@ import graphql.ErrorClassification;
 import graphql.ErrorType;
 import graphql.GraphQLError;
 import graphql.language.SourceLocation;
+import java.util.Collections;
 
 public class DifficultyNotFoundException extends RuntimeException implements GraphQLError {
 
@@ -14,13 +15,13 @@ public class DifficultyNotFoundException extends RuntimeException implements Gra
 	 */
 	private static final long serialVersionUID = -985243060034875486L;
 
-	public DifficultyNotFoundException(String message) {
-		super(message);
+	public DifficultyNotFoundException(String difficultyName) {
+		super("Difficulty not exist - " + difficultyName);
 	}
 
 	@Override
 	public List<SourceLocation> getLocations() {
-		return null;
+		return Collections.emptyList();
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package com.project.LeaugeOfLegendsApp.exceptions;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -7,17 +8,17 @@ import graphql.ErrorClassification;
 import graphql.ErrorType;
 import graphql.GraphQLError;
 import graphql.language.SourceLocation;
-import java.util.Collections;
 
-public class RoleNotFoundException extends RuntimeException implements GraphQLError  {
+public class QuestionNotFoundException extends RuntimeException implements GraphQLError  {
 
+	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -693663936217048152L;
-	
-	public RoleNotFoundException(String message){
-		super(message);
+	private static final long serialVersionUID = -5473630341000817012L;
+
+	public QuestionNotFoundException(String questionId) {
+		super("Question cannot be found " + questionId);
 	}
 
 	@Override

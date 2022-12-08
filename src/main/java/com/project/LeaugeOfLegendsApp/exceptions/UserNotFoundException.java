@@ -6,6 +6,7 @@ import graphql.ErrorClassification;
 import graphql.ErrorType;
 import graphql.GraphQLError;
 import graphql.language.SourceLocation;
+import java.util.Collections;
 
 public class UserNotFoundException extends RuntimeException implements GraphQLError {
 
@@ -13,13 +14,13 @@ public class UserNotFoundException extends RuntimeException implements GraphQLEr
 	private static final long serialVersionUID = -8444811766002409574L;
 	
 	
-	public UserNotFoundException(String message) {
-		super(message);
+	public UserNotFoundException(String username) {
+		super("User not exist " + username );
 	}
 
 	@Override
 	public List<SourceLocation> getLocations() {
-		return null;
+		return Collections.emptyList();
 	}
 
 	@Override

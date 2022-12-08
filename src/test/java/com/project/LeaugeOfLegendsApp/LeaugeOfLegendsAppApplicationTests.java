@@ -17,7 +17,7 @@ import org.springframework.http.HttpStatus;
 
 import com.graphql.spring.boot.test.GraphQLResponse;
 import com.graphql.spring.boot.test.GraphQLTestTemplate;
-import com.project.LeaugeOfLegendsApp.service.CategoryService;
+import com.project.LeaugeOfLegendsApp.category.CategoryService;
 
 import io.micrometer.core.instrument.util.IOUtils;
 
