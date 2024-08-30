@@ -1,14 +1,14 @@
 package com.project.LeaugeOfLegendsApp.auth;
 
+import graphql.kickstart.annotations.GraphQLMutationResolver;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Component;
-
-import graphql.kickstart.tools.GraphQLMutationResolver;
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class RoleMutation implements GraphQLMutationResolver {
+@GraphQLMutationResolver
+public class RoleMutation {
 	
 	private final RoleService roleService;
 	

@@ -2,14 +2,14 @@ package com.project.LeaugeOfLegendsApp.question;
 
 import java.util.List;
 
+import graphql.kickstart.annotations.GraphQLQueryResolver;
 import org.springframework.stereotype.Component;
-
-import graphql.kickstart.tools.GraphQLQueryResolver;
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class QuestionQuery implements GraphQLQueryResolver {
+@GraphQLQueryResolver
+public class QuestionQuery {
 
 	private final QuestionService questionService;
 	

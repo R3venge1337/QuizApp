@@ -3,8 +3,9 @@ package com.project.LeaugeOfLegendsApp.question;
 import java.io.IOException;
 import java.util.Objects;
 
-import javax.servlet.http.Part;
 
+import graphql.kickstart.annotations.GraphQLMutationResolver;
+import jakarta.servlet.http.Part;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Component;
 
@@ -13,12 +14,12 @@ import com.project.LeaugeOfLegendsApp.file.FilesService;
 import com.project.LeaugeOfLegendsApp.file.Image;
 import com.project.LeaugeOfLegendsApp.file.Video;
 
-import graphql.kickstart.tools.GraphQLMutationResolver;
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class QuestionMutation implements GraphQLMutationResolver {
+@GraphQLMutationResolver
+public class QuestionMutation  {
 
 	private final QuestionService questionService;
 

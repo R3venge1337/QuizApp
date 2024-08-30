@@ -2,17 +2,16 @@ package com.project.LeaugeOfLegendsApp.file;
 
 
 import java.io.IOException;
-
-import javax.servlet.http.Part;
-
+import graphql.kickstart.annotations.GraphQLMutationResolver;
+import jakarta.servlet.http.Part;
 import org.springframework.stereotype.Component;
 
-import graphql.kickstart.tools.GraphQLMutationResolver;
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class FilesMutation implements GraphQLMutationResolver {
+@GraphQLMutationResolver
+public class FilesMutation  {
 	
 	private final FilesService fileService;
 	

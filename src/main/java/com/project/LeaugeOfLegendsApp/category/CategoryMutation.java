@@ -1,14 +1,15 @@
 package com.project.LeaugeOfLegendsApp.category;
 
+import graphql.kickstart.annotations.GraphQLMutationResolver;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Component;
 
-import graphql.kickstart.tools.GraphQLMutationResolver;
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class CategoryMutation implements GraphQLMutationResolver  {
+@GraphQLMutationResolver
+public class CategoryMutation  {
 	
 	private final CategoryService categoryService;
 	

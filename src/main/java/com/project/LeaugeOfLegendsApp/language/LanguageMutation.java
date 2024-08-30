@@ -1,14 +1,15 @@
 package com.project.LeaugeOfLegendsApp.language;
 
+import graphql.kickstart.annotations.GraphQLMutationResolver;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Component;
 
-import graphql.kickstart.tools.GraphQLMutationResolver;
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class LanguageMutation implements GraphQLMutationResolver {
+@GraphQLMutationResolver
+public class LanguageMutation{
 	private final LanguageService languageService;
 	
 	@Secured({"ROLE_ADMIN", "ROLE_SUPERADMIN"})

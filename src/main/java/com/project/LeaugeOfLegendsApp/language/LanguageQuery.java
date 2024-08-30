@@ -2,14 +2,15 @@ package com.project.LeaugeOfLegendsApp.language;
 
 import java.util.List;
 
+import graphql.kickstart.annotations.GraphQLQueryResolver;
 import org.springframework.stereotype.Component;
 
-import graphql.kickstart.tools.GraphQLQueryResolver;
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class LanguageQuery implements GraphQLQueryResolver{
+@GraphQLQueryResolver
+public class LanguageQuery {
 	
 	private final LanguageService languageService;
 	
