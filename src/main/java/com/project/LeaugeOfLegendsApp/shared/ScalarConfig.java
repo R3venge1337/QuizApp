@@ -1,10 +1,10 @@
 package com.project.LeaugeOfLegendsApp.shared;
 
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import graphql.kickstart.servlet.apollo.ApolloScalars;
 import graphql.scalars.ExtendedScalars;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import graphql.schema.GraphQLScalarType;
 
 @Configuration

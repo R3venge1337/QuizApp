@@ -2,8 +2,7 @@ package com.project.LeaugeOfLegendsApp.file;
 
 import java.io.IOException;
 
-import javax.servlet.http.Part;
-
+import jakarta.servlet.http.Part;
 import org.bson.BsonBinarySubType;
 import org.bson.types.Binary;
 import org.springframework.stereotype.Service;
@@ -26,7 +25,7 @@ public class FilesService {
 	    
 	    //,audioFile: Upload,imageFile: Upload,videoFile: Upload
 	    
-	    public String addImage(Part file) throws IOException { 
+	    public String addImage(Part file) throws IOException {
 	    	Image photo = new Image(file.getSubmittedFileName(),new Binary(BsonBinarySubType.BINARY, file.getInputStream().readAllBytes()));
 	        photo = imageRepository.insert(photo); 
 	        return photo.getId();
