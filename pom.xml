@@ -52,12 +52,6 @@
 
 		<dependency>
 			<groupId>com.graphql-java-kickstart</groupId>
-			<artifactId>graphql-spring-boot-starter</artifactId>
-			<version>${graphql-spring-boot-starter}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.graphql-java-kickstart</groupId>
 			<artifactId>graphql-java-servlet</artifactId>
 			<version>${graphql-java-servlet}</version>
 		</dependency>
