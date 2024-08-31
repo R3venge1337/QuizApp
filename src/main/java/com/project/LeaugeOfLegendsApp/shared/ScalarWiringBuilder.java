@@ -11,7 +11,7 @@ import graphql.schema.idl.RuntimeWiring.Builder;
 public class ScalarWiringBuilder implements RuntimeWiringConfigurer{
 
 	@Override
-	public void configure(Builder builder) {
+	public void configure(final Builder builder) {
 		builder.scalar(ExtendedScalars.GraphQLByte)
 		.scalar(ApolloScalars.Upload)
 		.build();
