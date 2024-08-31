@@ -2,15 +2,15 @@ package com.project.LeaugeOfLegendsApp.difficulty;
 
 import java.util.List;
 
-import graphql.kickstart.annotations.GraphQLQueryResolver;
+import graphql.kickstart.tools.GraphQLQueryResolver;
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-@GraphQLQueryResolver
-public class DifficultyQuery {
+
+public class DifficultyQuery implements GraphQLQueryResolver {
 	
 	private final DifficultyService difficultyService;
 	

@@ -2,15 +2,14 @@ package com.project.LeaugeOfLegendsApp.auth;
 
 import java.util.List;
 
-import graphql.kickstart.annotations.GraphQLQueryResolver;
+import graphql.kickstart.tools.GraphQLQueryResolver;
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-@GraphQLQueryResolver
-public class UserQuery {
+public class UserQuery implements GraphQLQueryResolver {
 	
 	private final UserService userService;
 	

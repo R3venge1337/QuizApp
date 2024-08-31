@@ -2,15 +2,14 @@ package com.project.LeaugeOfLegendsApp.category;
 
 import java.util.List;
 
-import graphql.kickstart.annotations.GraphQLQueryResolver;
+import graphql.kickstart.tools.GraphQLQueryResolver;
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-@GraphQLQueryResolver
-public class CategoryQuery  {
+public class CategoryQuery implements GraphQLQueryResolver {
 	
 	private final CategoryService categoryService;
 	

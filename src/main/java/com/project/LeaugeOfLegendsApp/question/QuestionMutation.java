@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 
-import graphql.kickstart.annotations.GraphQLMutationResolver;
+import graphql.kickstart.tools.GraphQLMutationResolver;
 import jakarta.servlet.http.Part;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Component;
@@ -18,8 +18,7 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-@GraphQLMutationResolver
-public class QuestionMutation  {
+public class QuestionMutation implements GraphQLMutationResolver {
 
 	private final QuestionService questionService;
 

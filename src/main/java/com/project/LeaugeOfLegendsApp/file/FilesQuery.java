@@ -2,15 +2,14 @@ package com.project.LeaugeOfLegendsApp.file;
 
 import java.io.IOException;
 
-import graphql.kickstart.annotations.GraphQLQueryResolver;
+import graphql.kickstart.tools.GraphQLQueryResolver;
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-@GraphQLQueryResolver
-public class FilesQuery {
+public class FilesQuery implements GraphQLQueryResolver {
 	
 	private final FilesService fileService;
 	

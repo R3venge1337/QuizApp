@@ -1,6 +1,6 @@
 package com.project.LeaugeOfLegendsApp.difficulty;
 
-import graphql.kickstart.annotations.GraphQLMutationResolver;
+import graphql.kickstart.tools.GraphQLMutationResolver;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Component;
 
@@ -8,8 +8,7 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-@GraphQLMutationResolver
-public class DifficultyMutation  {
+public class DifficultyMutation implements GraphQLMutationResolver {
 	
 	private final DifficultyService difficultyService;
 	
