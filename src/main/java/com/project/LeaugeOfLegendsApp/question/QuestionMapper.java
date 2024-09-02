@@ -8,7 +8,7 @@ import com.project.LeaugeOfLegendsApp.shared.Mapper;
 public class QuestionMapper implements Mapper<QuestionDTO, Question> {
 
 	@Override
-	public QuestionDTO mapOfEntity(Question entity) {
+	public QuestionDTO mapOfEntity(final Question entity) {
 		  
 		return QuestionDTO.builder()
 				.id(entity.getId())
@@ -29,7 +29,7 @@ public class QuestionMapper implements Mapper<QuestionDTO, Question> {
 	}
 
 	@Override
-	public Question mapOfDTO(QuestionDTO dto) {
+	public Question mapOfDTO(final QuestionDTO dto) {
 		
 		return Question.builder()
 				.id(dto.getId())

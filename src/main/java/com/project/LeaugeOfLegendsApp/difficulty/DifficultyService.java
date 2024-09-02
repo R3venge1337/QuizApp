@@ -12,11 +12,11 @@ public class DifficultyService {
 
 	private final DifficultyRepository difficultyRepository;
 
-	public Difficulty createDifficulty(Difficulty difficulty) {
+	public Difficulty createDifficulty(final Difficulty difficulty) {
 		return difficultyRepository.insert(difficulty);
 	}
 
-	public Difficulty findDifficultyByName(EDifficulty difficulty) {
+	public Difficulty findDifficultyByName(final EDifficulty difficulty) {
 		return difficultyRepository.findByName(difficulty).orElseThrow();
 	}
 

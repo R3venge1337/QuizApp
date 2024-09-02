@@ -16,7 +16,7 @@ public class Difficulty {
 
 	private EDifficulty name;
 
-	public Difficulty(EDifficulty difficulty) {
+	public Difficulty(final EDifficulty difficulty) {
 		this.name = difficulty;
 	}
 

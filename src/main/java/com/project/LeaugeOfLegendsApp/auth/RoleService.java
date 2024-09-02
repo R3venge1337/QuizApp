@@ -13,7 +13,7 @@ public class RoleService {
 	
 	private final RoleRepository roleRepository;
 	
-	public Optional<Role> findByName(ERole name) {
+	public Optional<Role> findByName(final ERole name) {
 		return roleRepository.findByName(name);
 		
 	}
@@ -23,7 +23,7 @@ public class RoleService {
 		
 	}
 	
-	public Role createRole(Role role) {
+	public Role createRole(final Role role) {
 		return roleRepository.insert(role);
 	}
 }

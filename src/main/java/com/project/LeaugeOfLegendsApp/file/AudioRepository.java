@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface AudioRepository extends MongoRepository<Audio, String> {
 	
 	@Query("{'audioName' : ?0}")
-	Audio findAudioByAudioName(String audioName);
+	Audio findAudioByAudioName(final String audioName);
 
 }

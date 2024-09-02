@@ -16,7 +16,7 @@ public class Role {
 	
 	private ERole name;
 	
-	public Role(ERole roleName) {
+	public Role(final ERole roleName) {
 		this.name = roleName;
 	}
 }

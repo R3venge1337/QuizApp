@@ -20,7 +20,7 @@ public class Video {
 	
     private Binary videoFile;
     
-	public Video(String videoName, Binary videoFile) {
+	public Video(final String videoName, final Binary videoFile) {
 		this.videoName = videoName;
 		this.videoFile = videoFile;
 	} 

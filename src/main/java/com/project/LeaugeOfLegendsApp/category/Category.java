@@ -21,9 +21,7 @@ public class Category {
 	
 	private ECategory name;
 
-	public Category(ECategory category) {
+	public Category(final ECategory category) {
 		this.name = category;
 	}
-	
-	
 }

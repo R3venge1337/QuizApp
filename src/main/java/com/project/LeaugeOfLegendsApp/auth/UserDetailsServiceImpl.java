@@ -14,11 +14,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	private final UserService userService;
 	
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-	
-		User user = userService.findByUsername(username);
-		UserDetails details = new CustomUserDetails(user);
-        return details;
+	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
+		final User user = userService.findByUsername(username);
+        return new CustomUserDetails(user);
 	}
 	
 	

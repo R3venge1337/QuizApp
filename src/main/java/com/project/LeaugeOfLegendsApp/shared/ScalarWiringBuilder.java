@@ -1,20 +1,21 @@
 package com.project.LeaugeOfLegendsApp.shared;
 
-import graphql.kickstart.servlet.apollo.ApolloScalars;
 import graphql.scalars.ExtendedScalars;
+import graphql.schema.idl.RuntimeWiring.Builder;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.graphql.execution.RuntimeWiringConfigurer;
 
-import graphql.schema.idl.RuntimeWiring.Builder;
+import static com.project.LeaugeOfLegendsApp.shared.FileUploadScalar.FileUpload;
 
 @Configuration
-public class ScalarWiringBuilder implements RuntimeWiringConfigurer{
+public class ScalarWiringBuilder implements RuntimeWiringConfigurer {
 
-	@Override
-	public void configure(final Builder builder) {
-		builder.scalar(ExtendedScalars.GraphQLByte)
-		.scalar(ApolloScalars.Upload)
-		.build();
-	}
+    @Override
+    public void configure(final Builder builder) {
+        builder.scalar(ExtendedScalars.GraphQLByte)
+                .scalar(FileUpload)
+                .build();
+    }
+
 
 }

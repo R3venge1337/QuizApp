@@ -16,7 +16,7 @@ public class Language {
 	
 	private ELanguage name;
 
-	public Language(ELanguage language) {
+	public Language(final ELanguage language) {
 		this.name = language;
 	}
 	

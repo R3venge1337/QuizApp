@@ -19,7 +19,7 @@ public class UserService {
 
 	private final RoleRepository roleRepository;
 
-	public User createUser(User user) {
+	public User createUser(final User user) {
 		return userRepository.insert(user);
 	}
 
@@ -27,23 +27,23 @@ public class UserService {
 		return userRepository.findAll().stream().limit(limit).collect(Collectors.toList());
 	}
 
-	public User findByUsername(String username) {
+	public User findByUsername(final String username) {
 		return userRepository.findByUsername(username).orElseThrow();
 	}
 
-	public User addRoleToUser(String username, Role role) {
-		User user = userRepository.findByUsername(username)
+	public User addRoleToUser(final String username, final Role role) {
+		final User user = userRepository.findByUsername(username)
 				.orElseThrow(() -> new UserNotFoundException("User not exist"));
-		Set<Role> roles = user.getRoles();
+		final Set<Role> roles = user.getRoles();
 		roles.add(roleRepository.findByName(role.getName())
 				.orElseThrow(() -> new RoleNotFoundException("Role not found")));
 		return userRepository.save(user);
 	}
 	
-	public User deleteUserRole(String username,Role role) {
-		User user = userRepository.findByUsername(username)
+	public User deleteUserRole(final String username, final Role role) {
+		final User user = userRepository.findByUsername(username)
 				.orElseThrow(() -> new UserNotFoundException("User not exist"));
-		Set<Role> roles = user.getRoles();
+		final Set<Role> roles = user.getRoles();
 		roles.remove(roleRepository.findByName(role.getName())
 				.orElseThrow(() -> new RoleNotFoundException("Role not found")));
 		return userRepository.save(user);

@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DifficultyRepository extends MongoRepository<Difficulty, String>  {
-	Optional<Difficulty> findByName(EDifficulty difficulty);
+	Optional<Difficulty> findByName(final EDifficulty difficulty);
 
 }

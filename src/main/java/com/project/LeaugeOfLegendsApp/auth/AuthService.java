@@ -34,7 +34,7 @@ public class AuthService {
 	private final JwtTokenUtil jwtTokenUtil;
 
 
-	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) throws Exception {
+	public ResponseEntity<?> authenticateUser(@Valid @RequestBody final LoginRequest loginRequest) throws Exception {
 		
 		authenticate(loginRequest.getUsername(),loginRequest.getPassword());
 		
@@ -60,7 +60,7 @@ public class AuthService {
 				new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
 	}
 
-	public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+	public ResponseEntity<?> registerUser(@Valid @RequestBody final SignupRequest signUpRequest) {
 		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
 			return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
 		}
@@ -82,7 +82,7 @@ public class AuthService {
 		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
 	}
 	
-	private void authenticate(String username, String password) throws Exception {
+	private void authenticate(final String username, final String password) throws Exception {
 		try {
 			authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
 		} catch (DisabledException e) {

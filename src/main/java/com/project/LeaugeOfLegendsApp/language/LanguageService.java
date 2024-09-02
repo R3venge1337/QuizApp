@@ -16,11 +16,11 @@ public class LanguageService {
 		return languageRepository.findAll();
 	}
 	
-	public Language createLanguage(Language lang) {
+	public Language createLanguage(final Language lang) {
 		return languageRepository.insert(lang);
 	}
 	
-	public Language findLanguageByName(ELanguage lang) {
+	public Language findLanguageByName(final ELanguage lang) {
 		return languageRepository.findByName(lang)
 							.orElseThrow();
 	}

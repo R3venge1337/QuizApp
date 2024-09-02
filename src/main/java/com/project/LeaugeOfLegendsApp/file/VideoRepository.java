@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface VideoRepository extends MongoRepository<Video, String> {
 	
-	Video findVideoByVideoName(String videoName);
+	Video findVideoByVideoName(final String videoName);
 
 }
