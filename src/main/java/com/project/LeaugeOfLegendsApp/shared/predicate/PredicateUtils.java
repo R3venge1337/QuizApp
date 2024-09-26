@@ -1,4 +1,4 @@
-Apackage com.project.LeaugeOfLegendsApp.shared.predicate;
+package com.project.LeaugeOfLegendsApp.shared.predicate;
 
 
 import com.querydsl.core.BooleanBuilder;
