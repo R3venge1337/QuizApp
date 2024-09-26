@@ -19,11 +19,11 @@ public class Image {
 	
     private Binary imageFile;
 
-	public Image(String imageName) {
+	public Image(final String imageName) {
 		this.imageName = imageName;
 	}
 
-	public Image(String imageName, Binary imageFile) {
+	public Image(final String imageName, final Binary imageFile) {
 		this.imageName = imageName;
 		this.imageFile = imageFile;
 	}

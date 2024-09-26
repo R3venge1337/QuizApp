@@ -2,8 +2,7 @@ package com.project.LeaugeOfLegendsApp.file;
 
 import java.io.IOException;
 
-import javax.servlet.http.Part;
-
+import jakarta.servlet.http.Part;
 import org.bson.BsonBinarySubType;
 import org.bson.types.Binary;
 import org.springframework.stereotype.Service;
@@ -26,32 +25,32 @@ public class FilesService {
 	    
 	    //,audioFile: Upload,imageFile: Upload,videoFile: Upload
 	    
-	    public String addImage(Part file) throws IOException { 
+	    public String addImage(final Part file) throws IOException {
 	    	Image photo = new Image(file.getSubmittedFileName(),new Binary(BsonBinarySubType.BINARY, file.getInputStream().readAllBytes()));
 	        photo = imageRepository.insert(photo); 
 	        return photo.getId();
 	    	
 	    }
 
-	    public Image getImage(String id) { 
+	    public Image getImage(final String id) {
 	        return imageRepository.findById(id).get(); 
 	    }
 	    
-	    public Image getImageByName(String name) { 
+	    public Image getImageByName(final String name) {
 	        return imageRepository.findImageByImageName(name);
 	    }
 	    
-	    public String addAudio(Part file) throws IOException { 
+	    public String addAudio(final Part file) throws IOException {
 	        Audio audioFile = new Audio(file.getSubmittedFileName(),new Binary(BsonBinarySubType.BINARY, file.getInputStream().readAllBytes())); 
 	        audioFile = audioRepository.insert(audioFile); 
 	        return audioFile.getId(); 
 	    }
 
-	    public Audio getAudio(String id) { 
+	    public Audio getAudio(final String id) {
 	        return audioRepository.findById(id).get(); 
 	    }
 	    
-	    public Audio getAudioByName(String name) { 
+	    public Audio getAudioByName(final String name) {
 	        return audioRepository.findAudioByAudioName(name);
 	    }
 	    
@@ -74,17 +73,17 @@ public class FilesService {
 	    }
 	    */
 	    
-	    public String addVideo(Part file) throws IOException { 
+	    public String addVideo(final Part file) throws IOException {
 	    	Video video = new Video(file.getSubmittedFileName(),new Binary(BsonBinarySubType.BINARY, file.getInputStream().readAllBytes()));
 	        video = videoRepository.insert(video); 
 	        return video.getId();
 	    }
 	    
-	    public Video getVideo(String id) throws IllegalStateException, IOException { 
+	    public Video getVideo(final String id) throws IllegalStateException, IOException {
 	    	return videoRepository.findById(id).get();
 	    }
 	    
-	    public Video getVideoByName(String name) throws IllegalStateException, IOException { 
+	    public Video getVideoByName(final String name) throws IllegalStateException, IOException {
 	       return videoRepository.findVideoByVideoName(name);
 	    }
 }

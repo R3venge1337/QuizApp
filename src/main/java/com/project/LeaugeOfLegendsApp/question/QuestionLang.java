@@ -7,7 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.project.LeaugeOfLegendsApp.auth.User;
+import com.project.LeaugeOfLegendsApp.auth.domain.User;
 import com.project.LeaugeOfLegendsApp.language.ELanguage;
 
 import lombok.Data;

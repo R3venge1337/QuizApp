@@ -13,7 +13,7 @@ public class CategoryService {
 	
 	private final CategoryRepository categoryRepository;
 	
-	public Category createCategory(Category category) {
+	public Category createCategory(final Category category) {
 		return categoryRepository.insert(category);
 	}
 	
@@ -21,7 +21,7 @@ public class CategoryService {
 		return categoryRepository.findAll();
 	}
 	
-	public Category getCategoryByName(ECategory categoryName){
+	public Category getCategoryByName(final ECategory categoryName){
 		return categoryRepository.getCategoryByName(categoryName)
 					.orElseThrow(() -> new CategoryNotFoundException(categoryName.toString()));
 	}

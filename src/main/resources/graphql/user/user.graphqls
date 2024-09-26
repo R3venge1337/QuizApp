@@ -6,22 +6,37 @@ type User {
 	 roles: [Role]
 }
 
-input UserInput {
- 	 username: String
-	 email: String
-	 password: String
-	 roles: [RoleInput]
-}
 
-input registerUserInput {
+input LoginRequest {
  	 username: String
-	 email: String
 	 password: String
 }
 
-input loginUserInput {
- 	 username: String
-	 password: String
+input RoleUuidForm {
+   uuids: [UUID]
+}
+
+input CreateUserForm {
+ username: String!,
+ email: String!
+ password: String!
+}
+
+input UpdateUserForm {
+ username: String!,
+ email: String!
+ password: String!
+}
+
+input FilterUserForm {
+ username: String,
+ email: String
+}
+
+type UserResponse {
+ uuid: UUID
+ username: String
+ roles: [RoleResponse]
 }
 
 type JwtResponse {
@@ -31,3 +46,4 @@ type JwtResponse {
 	 email: String
 	 roles: [String]
 }
+

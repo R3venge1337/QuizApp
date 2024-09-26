@@ -1,46 +1,44 @@
 package com.project.LeaugeOfLegendsApp;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-
-import org.assertj.core.api.Assertions;
+import com.project.LeaugeOfLegendsApp.category.Category;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.HttpStatus;
+import org.springframework.graphql.test.tester.HttpGraphQlTester;
 
-import com.graphql.spring.boot.test.GraphQLResponse;
-import com.graphql.spring.boot.test.GraphQLTestTemplate;
-
-import io.micrometer.core.instrument.util.IOUtils;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = LeaugeOfLegendsAppApplication.class)
 @AutoConfigureMockMvc
 public class CategoryTest {
-	
-	private static final String GRAPQL_QUERY_REQUEST_PATH = "request/";
-	private static final String GRAPQL_QUERY_RESPONSE_PATH = "response/";
 
-	@Autowired
-	private GraphQLTestTemplate graphQLTestTemplate;
-	
-	private String read(String location) throws IOException {
-		return IOUtils.toString(new ClassPathResource(location).getInputStream(), StandardCharsets.UTF_8);
-	}
-	
-	@Test
-	public void ShouldGetCategoryByName() throws IOException {
-		
-		GraphQLResponse response = graphQLTestTemplate.postForResource(GRAPQL_QUERY_REQUEST_PATH+"getCategoryRequest.graphql");
-		String expectedResponseBody = read(String.format(GRAPQL_QUERY_RESPONSE_PATH+"getCategoryResponse.json"));
-		System.out.println(expectedResponseBody);
-		Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-		assertEquals(expectedResponseBody, response.getRawResponse().getBody());
-	}
+    private static final String GRAPQL_QUERY_REQUEST_PATH = "./src/test/resources/graphql-test/request/";
+    private static final String GRAPQL_QUERY_RESPONSE_PATH = "graphql-test/response/";
 
+    @Autowired
+    private HttpGraphQlTester httpGraphQlTester;
+
+
+    @Test
+    public void ShouldGetCategoryByName() throws IOException {
+        final File file = new File(GRAPQL_QUERY_REQUEST_PATH + "getCategoryRequest.graphql");
+        final String fileContent = new String(Files.readAllBytes(Path.of(file.getPath())));
+        System.out.println(fileContent);
+
+        this.httpGraphQlTester.document(fileContent)
+                .variable("name", "ITEMS")
+                .execute()
+                .path("getCategoryByName")
+                .entity(Category.class)
+                .satisfies(category -> {
+                    Assertions.assertEquals("ITEMS", category.getName().name());
+                });
+    }
 }

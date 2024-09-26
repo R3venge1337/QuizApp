@@ -1,16 +1,25 @@
-enum ERole {
-  		ROLE_USER,
-		ROLE_MODERATOR,
-		ROLE_ADMIN,
-		ROLE_SUPERADMIN,
-		ROLE_QUESTMAKER
-}
-
 type Role {
 	 id: ID!
-	 name: ERole
+	 uuid: UUID!
+	 name: String!
+	 permissions: [Permission]
 }
 
-input RoleInput {
- 	name: String
+input CreateRoleForm {
+ name: String
 }
+
+input UpdateRoleForm {
+ name: String
+}
+
+input FilterRoleForm {
+ name: String
+}
+
+type RoleResponse {
+ uuid: UUID
+ name: String
+ permissions: [PermissionResponse]
+}
+
