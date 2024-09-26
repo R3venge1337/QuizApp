@@ -1,23 +1,24 @@
 package com.project.LeaugeOfLegendsApp;
 
 
-
-
+import com.project.LeaugeOfLegendsApp.question.QuestionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
-import com.project.LeaugeOfLegendsApp.question.QuestionService;
+import org.springframework.graphql.test.tester.HttpGraphQlTester;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes = LeaugeOfLegendsAppApplication.class)
 @AutoConfigureMockMvc
 public class QuestionsTest {
-	
-	
-	
-	@MockBean
-	QuestionService questionServiceMock;
+
+
+    @MockBean
+    QuestionService questionServiceMock;
+
+    @Autowired
+    private HttpGraphQlTester httpGraphQlTester;
 	
 	/*
 	@ParameterizedTest
