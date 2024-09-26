@@ -1,4 +1,4 @@
-package com.project.LeaugeOfLegendsApp.shared;
+package com.project.LeaugeOfLegendsApp.shared.scalar;
 
 import graphql.GraphQLContext;
 import graphql.execution.CoercedVariables;
@@ -8,8 +8,9 @@ import graphql.schema.Coercing;
 import graphql.schema.CoercingParseLiteralException;
 import graphql.schema.CoercingParseValueException;
 import graphql.schema.CoercingSerializeException;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.NotNull;
+import lombok.NonNull;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.Locale;
@@ -19,17 +20,17 @@ import java.util.regex.Pattern;
 public class CustomEmailCoercing implements Coercing<Object, Object> {
 
     @Override
-    public @Nullable Object serialize(@NotNull Object dataFetcherResult, @NotNull GraphQLContext graphQLContext, @NotNull Locale locale) throws CoercingSerializeException {
+    public @Nullable Object serialize(@NonNull Object dataFetcherResult, @NonNull GraphQLContext graphQLContext, @NonNull Locale locale) throws CoercingSerializeException {
         return serializeEmail(dataFetcherResult);
     }
 
     @Override
-    public @Nullable Object parseValue(@NotNull Object input, @NotNull GraphQLContext graphQLContext, @NotNull Locale locale) throws CoercingParseValueException {
+    public @Nullable Object parseValue(@NonNull Object input, @NonNull GraphQLContext graphQLContext, @NonNull Locale locale) throws CoercingParseValueException {
         return parseEmailFromVariable(input);
     }
 
     @Override
-    public @Nullable Object parseLiteral(@NotNull Value<?> input, @NotNull CoercedVariables variables, @NotNull GraphQLContext graphQLContext, @NotNull Locale locale) throws CoercingParseLiteralException {
+    public @Nullable Object parseLiteral(@NonNull Value<?> input, @NonNull CoercedVariables variables, @NonNull GraphQLContext graphQLContext, @NotNull Locale locale) throws CoercingParseLiteralException {
         return parseEmailFromAstLiteral(input);
     }
 
