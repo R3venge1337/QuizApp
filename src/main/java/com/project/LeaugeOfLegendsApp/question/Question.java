@@ -7,7 +7,7 @@ import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.project.LeaugeOfLegendsApp.auth.User;
+import com.project.LeaugeOfLegendsApp.auth.domain.User;
 import com.project.LeaugeOfLegendsApp.category.Category;
 import com.project.LeaugeOfLegendsApp.difficulty.Difficulty;
 import com.project.LeaugeOfLegendsApp.file.Audio;
