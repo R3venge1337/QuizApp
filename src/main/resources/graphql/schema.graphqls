@@ -5,13 +5,20 @@ schema {
 
 scalar Byte
 scalar Upload
-
+scalar UUID
+scalar Long
+scalar Void
 
 type Query {
-	getAllRoles: [Role]
-	getRoleByName(roleName: ERole): Role
-	getAllUsers(limit: Int): [User]
-	findByUsername(username: String): User
+	getAllRoles(filterForm: FilterRoleForm, pageableRequest: PageableRequest): PageDto
+	getRoleByName(name: String): RoleResponse
+	getAllPermissions(filterForm: FilterPermissionForm, pageableRequest: PageableRequest): PageDto
+	getPermissionByUuid(uuid: UUID): PermissionResponse
+    getAllUsers(filterForm: FilterUserForm, pageableRequest: PageableRequest): PageDto
+    findByUsername(username: String): User
+    findUserByUuid(uuid: UUID): UserResponse
+
+
 	findAllDifficulties: [Difficulty]
 	getDifficultyByName(difficultyName: EDifficulty): Difficulty
 	getCategoryByName(categoryName: ECategory): Category
@@ -26,21 +33,49 @@ type Query {
 }
 
 type Mutation {
-	createRole(role: RoleInput): Role
-	createUser(user: UserInput): User
+	createRole(createForm: CreateRoleForm): RoleResponse
+	updateRole(uuid: UUID, updateForm: UpdateRoleForm): RoleResponse
+	createPermission(createForm: CreatePermissionForm): PermissionResponse
+	updatePermission(uuid: UUID, updateForm: UpdatePermissionForm): PermissionResponse
+	deleteRole(uuid: UUID): Void
+    deletePermission(uuid: UUID): Void
+	addRoleToUser(uuid: UUID, uuids: RoleUuidForm): Void
+	deleteUserRole(uuid: UUID, uuids: RoleUuidForm): Void
+    registerUser(createForm: CreateUserForm): UserResponse
+	authenticateUser(loginRequest: LoginRequest): JwtResponse
+
+
 	createCategory(name: CategoryInput): Category
 	createLanguage(name: LanguageInput): Language
 	createDifficulty(name: DifficultyInput): Difficulty
 	createQuestion(question: QuestionInput,imageFile:Upload,audioFile:Upload,videoFile:Upload): Question
 	createQuestionFromJsonFile(file:Upload): Boolean
 	updateQuestion(id:String,questionUpdate: QuestionUpdateInput): Question
-	registerUser(user: registerUserInput): String
-	authenticateUser(user: loginUserInput): JwtResponse
 	addImage(file: Upload): String
 	addAudio(file: Upload): String
 	addVideo(file: Upload): String
-	addRoleToUser(username:String,role:RoleInput):User
 	deleteAllQuestions: Boolean
-	deleteUserRole(username:String,role:RoleInput):User
 	deleteQuestionById(id:String):Boolean
+	deleteUser(uuid: UUID): Void
 }
+
+input PageableRequest {
+ page: Int
+ size: Int
+ sortField: String
+ sortDirection: Direction
+}
+
+enum Direction {
+ ASC,
+ DESC
+}
+
+type PageDto {
+ pageNumber: Int!
+ pageSize: Int!
+ totalElements: Long!
+ content: [pageContentType]
+}
+
+union pageContentType = UserResponse | RoleResponse | PermissionResponse
