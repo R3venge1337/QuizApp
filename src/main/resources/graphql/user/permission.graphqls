@@ -1,0 +1,22 @@
+type Permission {
+	 id: ID!
+	 uuid: UUID!
+	 name: String!
+}
+
+input CreatePermissionForm {
+ name: String
+}
+
+input UpdatePermissionForm {
+ name: String
+}
+
+input FilterPermissionForm {
+ name: String
+}
+
+type PermissionResponse {
+ uuid: UUID
+ name: String
+}
