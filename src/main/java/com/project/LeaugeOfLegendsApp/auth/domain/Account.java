@@ -40,13 +40,17 @@ public class Account extends AbstractUUIDEntity {
 
     private LocalDateTime LoggedIn;
 
-    private LocalDateTime LoggedOff;
+    private LocalDateTime LoggedOffAt;
 
-    private LocalDateTime lastFailedAttempt;
+    private LocalDateTime lastFailedAttemptAt;
 
     private int failedAttempts;
 
     private String passwordResetToken;
+
+    private String verificationCode;
+
+    private LocalDateTime verificationCodeExpiredAt;
 
     private LocalDateTime passwordResetTokenExpiry;
 
