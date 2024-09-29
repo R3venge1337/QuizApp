@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 
 @RequiredArgsConstructor
-class AuthorizationUser implements UserDetails {
+public class AuthorizationUser implements UserDetails {
 
     private final UserWithAccount user;
 
@@ -45,6 +45,6 @@ class AuthorizationUser implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return user.isActive();
+        return user.isEnabled();
     }
 }
