@@ -5,5 +5,5 @@ import java.util.UUID;
 
 public record UserWithAccount(UUID userUuid, UUID accountUuid, String username, String password, String email,
                               Set<String> roles,
-                              Boolean isActive, Boolean isLocked, Boolean isTwoFactorEnabled) {
+                              Boolean isEnabled, Boolean isLocked) {
 }
