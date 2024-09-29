@@ -17,6 +17,8 @@ public class ScalarWiringBuilder implements RuntimeWiringConfigurer {
                 .scalar(ExtendedScalars.GraphQLLong)
                 .scalar(GraphQLVoidScalar.Void)
                 .scalar(GraphQLEmailScalar.EMAIL)
+                .scalar(ExtendedScalars.Date)
+                .scalar(ExtendedScalars.DateTime)
                 .build();
     }
 
