@@ -5,7 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -25,24 +24,20 @@ import java.util.List;
 class WebSecurityConfig {
 
     private final JwtRequestFilter jwtRequestFilter;
-    private final AuthenticationProvider authenticationProvider;
 
     @Bean
     public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
 
-        http
-                .cors(cors -> cors.configurationSource(getCorsConfigurationSource()))
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests((authorize) -> {
-//                    authorize.requestMatchers("/static/**", "/resources/**", "/playground", "/graphql").permitAll();
-//                    authorize.anyRequest().authenticated();
-                    authorize.anyRequest().permitAll();
+        http.authorizeHttpRequests((authorize) -> {
+                    authorize.requestMatchers("/static/**", "/resources/**", "/playground", "/graphql", "/graphql/**","/graphiql","/graphiql/**").permitAll();
+                    authorize.anyRequest().authenticated();
                 })
                 .requestCache(RequestCacheConfigurer::disable)
                 .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-        http.authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .cors(cors -> cors.configurationSource(getCorsConfigurationSource()))
+                .csrf(AbstractHttpConfigurer::disable);
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
