@@ -1,6 +1,5 @@
 package com.project.LeaugeOfLegendsApp.auth.domain;
 
-import com.project.LeaugeOfLegendsApp.auth.domain.QUser;
 import com.project.LeaugeOfLegendsApp.auth.UserFacade;
 import com.project.LeaugeOfLegendsApp.auth.dto.FilterUserForm;
 import com.project.LeaugeOfLegendsApp.auth.dto.RoleUuidForm;
@@ -8,7 +7,6 @@ import com.project.LeaugeOfLegendsApp.auth.dto.UpdateUserForm;
 import com.project.LeaugeOfLegendsApp.auth.dto.UserResponse;
 import com.project.LeaugeOfLegendsApp.auth.dto.UserWithAccount;
 import com.project.LeaugeOfLegendsApp.exceptions.NotFoundException;
-import com.project.LeaugeOfLegendsApp.exceptions.UserNotFoundException;
 import com.project.LeaugeOfLegendsApp.shared.controller.PageDto;
 import com.project.LeaugeOfLegendsApp.shared.controller.PageableRequest;
 import com.project.LeaugeOfLegendsApp.shared.controller.PageableUtils;
@@ -16,16 +14,14 @@ import com.querydsl.core.types.Predicate;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.Validate;
 import org.springframework.data.domain.Page;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static com.project.LeaugeOfLegendsApp.auth.domain.DomainMapper.mapToUserResponse;
+import static com.project.LeaugeOfLegendsApp.auth.domain.DomainMapper.maptoUserWithAccount;
 import static com.project.LeaugeOfLegendsApp.auth.domain.UserService.ErrorMessages.USER_NOT_FOUND;
 
 @Service
@@ -33,8 +29,6 @@ import static com.project.LeaugeOfLegendsApp.auth.domain.UserService.ErrorMessag
 class UserService implements UserFacade {
 
     private final UserRepository userRepository;
-
-    private final AccountRepository accountRepository;
 
     private final RoleRepository roleRepository;
 
@@ -65,8 +59,8 @@ class UserService implements UserFacade {
     }
 
     @Override
-    public UserResponse findByUsername(final String username) {
-        return mapToUserResponse(userRepository.findByUsername(username)
+    public UserWithAccount findByUsername(final String username) {
+        return maptoUserWithAccount(userRepository.findByUsername(username)
                 .orElseThrow(() -> new NotFoundException(USER_NOT_FOUND, username)));
     }
 
@@ -100,21 +94,5 @@ class UserService implements UserFacade {
     @Override
     public void deleteByUuid(final UUID uuid) {
         userRepository.deleteByUuid(uuid);
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        final User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException(String.format(USER_NOT_FOUND, username)));
-        final Account account = user.getAccount();
-        return new AuthorizationUser(new UserWithAccount(user.getUuid(), account.getUuid(),
-                account.getUsername(),
-                account.getPassword(),
-                account.getEmail(),
-                account.getRoles().stream().map(Role::getName).collect(Collectors.toSet()),
-                account.getIsActive(),
-                account.getIsLocked(),
-                account.getIsTwoFactorAuthenticationEnabled())
-        );
     }
 }

@@ -19,6 +19,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static com.project.LeaugeOfLegendsApp.auth.domain.AccountService.ErrorMessages.ACCOUNT_NOT_FOUND;
+import static com.project.LeaugeOfLegendsApp.auth.domain.AccountService.ErrorMessages.ACCOUNT_NOT_FOUND_BY_VERIFICATION_CODE;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +30,8 @@ class AccountService implements AccountFacade {
 
     static final class ErrorMessages {
         static final String ACCOUNT_NOT_FOUND = "Account has not been found: %s";
+        static final String ACCOUNT_NOT_FOUND_BY_VERIFICATION_CODE = "Account has not been found by this verification code: %s";
+
     }
 
     @Override
@@ -46,6 +49,12 @@ class AccountService implements AccountFacade {
     public AccountResponse findByUuid(final UUID uuid) {
         return mapToAccountResponse(accountRepository.findByUuid(uuid)
                 .orElseThrow(() -> new NotFoundException(ACCOUNT_NOT_FOUND, uuid)));
+    }
+
+    @Override
+    public AccountResponse findByVerificationCode(final String verificationCode) {
+        return mapToAccountResponse(accountRepository.findByVerificationCode(verificationCode)
+                .orElseThrow(() -> new NotFoundException(ACCOUNT_NOT_FOUND_BY_VERIFICATION_CODE, verificationCode)));
     }
 
     @Override
@@ -77,7 +86,7 @@ class AccountService implements AccountFacade {
     }
 
     private AccountResponse mapToAccountResponse(final Account account) {
-        return new AccountResponse(account.getUuid(), account.getUsername(), account.getEmail(), account.getRoles().stream().map(this::mapToRoleResponse).collect(Collectors.toUnmodifiableSet()));
+        return new AccountResponse(account.getUuid(), account.getUsername(), account.getEmail(),account.getIsEnabled(), account.getRoles().stream().map(this::mapToRoleResponse).collect(Collectors.toUnmodifiableSet()));
     }
 
     private RoleResponse mapToRoleResponse(final Role role) {

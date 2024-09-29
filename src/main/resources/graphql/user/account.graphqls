@@ -1,0 +1,28 @@
+type Account {
+	 id: ID!
+	 username: String
+	 email: String
+	 password: String
+	 isEnabled: Boolean
+	 isLocked: Account
+	 lastLoginIp: String
+	 createdAt: Date
+	 updatedAt: Date
+	 loggedIn: Date
+	 loggedOffAt: Date
+	 lastFailedAttemptAt: Date
+	 failedAttempts: Int
+	 passwordResetToken: String
+	 verificationCode: String
+	 verificationCodeExpiredAt: Date
+	 passwordResetTokenExpiry: Date
+	 isTwoFactorAuthenticationEnabled: Boolean
+}
+
+type AccountResponse {
+    uuid: UUID
+    username: String
+    email: String
+    isEnabled: Boolean
+    roles: [RoleResponse]
+}

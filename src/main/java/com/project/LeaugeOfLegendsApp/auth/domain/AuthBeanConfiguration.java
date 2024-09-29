@@ -3,11 +3,13 @@ package com.project.LeaugeOfLegendsApp.auth.domain;
 import com.project.LeaugeOfLegendsApp.auth.AccountFacade;
 import com.project.LeaugeOfLegendsApp.auth.PasswordFacade;
 import com.project.LeaugeOfLegendsApp.auth.UserFacade;
+import com.project.LeaugeOfLegendsApp.auth.dto.UserWithAccount;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -15,8 +17,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 class AuthBeanConfiguration {
 
     @Bean
-    AccountFacade accountFacade(AccountRepository accountRepository, final PasswordFacade passwordFacade) {
+    AccountFacade accountFacade(final AccountRepository accountRepository, final PasswordFacade passwordFacade) {
         return new AccountService(accountRepository, passwordFacade);
+    }
+
+    @Bean
+    UserDetailsService userDetailsService(final UserFacade userFacade) {
+        return username -> {
+            final UserWithAccount userWithAccount = userFacade.findByUsername(username);
+            return new AuthorizationUser(userWithAccount);
+        };
     }
 
     @Bean
@@ -33,7 +43,7 @@ class AuthBeanConfiguration {
     public AuthenticationProvider authenticationProvider(final UserFacade userFacade) {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
 
-        authenticationProvider.setUserDetailsService(userFacade);
+        authenticationProvider.setUserDetailsService(userDetailsService(userFacade));
         authenticationProvider.setPasswordEncoder(passwordEncoder());
 
         return authenticationProvider;

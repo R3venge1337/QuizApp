@@ -9,6 +9,10 @@ import java.util.UUID;
 interface AccountRepository extends MongoRepository<Account, String>, QuerydslPredicateExecutor<Account> {
     Optional<Account> findByUsername(final String username);
 
+    Optional<Account> findByVerificationCode(final String verificationCode);
+
+    Optional<Account> findByEmail(final String email);
+
     Boolean existsByUsername(final String username);
 
     Boolean existsByEmail(final String email);

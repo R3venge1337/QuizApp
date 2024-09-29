@@ -1,57 +1,70 @@
 package com.project.LeaugeOfLegendsApp.auth.security;
 
-import com.project.LeaugeOfLegendsApp.auth.AuthFacade;
-import com.project.LeaugeOfLegendsApp.auth.UserFacade;
+import com.project.LeaugeOfLegendsApp.auth.dto.UserWithAccount;
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-    private final UserFacade userFacade;
     private final JwtTokenUtil jwtTokenUtil;
 
 
     @Override
-    protected void doFilterInternal(final HttpServletRequest request, final HttpServletResponse response, final FilterChain chain)
+    protected void doFilterInternal(final HttpServletRequest request, final HttpServletResponse response, final FilterChain filterChain)
             throws ServletException, IOException {
-        final String authorizationHeader = request.getHeader("Authorization");
+        final String authHeader = request.getHeader("Authorization");
+        final String jwt;
+        final String login;
 
-        String username = null;
-        String jwt = null;
-
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            jwt = authorizationHeader.substring(7);
-            username = jwtTokenUtil.getUsernameFromToken(jwt);
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            filterChain.doFilter(request, response);
+            return;
         }
 
+        jwt = authHeader.substring(7);
 
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        login = jwtTokenUtil.getUsernameFromToken(jwt);
+        if (login != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            final Claims claims = jwtTokenUtil.getAllClaimsFromToken(jwt);
+            final String username = claims.get(JwtTokenUtil.USER_LOGIN, String.class);
+            final String userRole = claims.get(JwtTokenUtil.USER_TYPE, String.class);
+            final String accountUuid = claims.get(JwtTokenUtil.ACCOUNT_UUID, String.class);
+            final String userUuid = claims.get(JwtTokenUtil.USER_UUID, String.class);
+            final String accountPassword = claims.get(JwtTokenUtil.USER_PASSWORD, String.class);
+            final String userEmail = claims.get(JwtTokenUtil.USER_EMAIL, String.class);
+            final String accountEnabled = claims.get(JwtTokenUtil.ACCOUNT_ENABLED, String.class);
+            final String accountLocked = claims.get(JwtTokenUtil.ACCOUNT_LOCKED, String.class);
 
-            UserDetails userDetails = userFacade.loadUserByUsername(username);
 
-            if (jwtTokenUtil.validateToken(jwt, userDetails)) {
+            if (!jwtTokenUtil.isTokenExpired(jwt)) {
+                final UsernamePasswordAuthenticationToken authenticationToken =
+                        new UsernamePasswordAuthenticationToken(new UserWithAccount(UUID.fromString(userUuid), UUID.fromString(accountUuid), username, accountPassword, userEmail, Set.of(userRole), Boolean.valueOf(accountEnabled), Boolean.valueOf(accountLocked)), null, List.of(new SimpleGrantedAuthority(userRole)));
 
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities());
-                usernamePasswordAuthenticationToken
-                        .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                authenticationToken.setDetails(
+                        new WebAuthenticationDetailsSource().buildDetails(request)
+                );
+
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             }
         }
-        chain.doFilter(request, response);
-    }
 
+        filterChain.doFilter(request, response);
+    }
 }

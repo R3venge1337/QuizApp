@@ -12,7 +12,7 @@ import java.util.UUID;
 interface UserRepository extends MongoRepository<User, String>, QuerydslPredicateExecutor<User> {
     Optional<User> findByUuid(final UUID uuid);
 
-    @Query("SELECT u FROM User u INNER JOIN u.account acc WHERE acc.username = :username")
+    @Query(value = "SELECT u FROM User u FETCH JOIN u.account acc WHERE acc.username = :username")
     Optional<User> findByUsername(@Param(value = "username") String username);
 
     void deleteByUuid(final UUID uuid);

@@ -28,25 +28,29 @@ public class Account extends AbstractUUIDEntity {
 
     private String password;
 
-    private Boolean isActive;
+    private Boolean isEnabled;
 
     private Boolean isLocked;
 
-    private String LastLoginIp;
+    private String lastLoginIp;
 
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
 
-    private LocalDateTime LoggedIn;
+    private LocalDateTime loggedIn;
 
-    private LocalDateTime LoggedOff;
+    private LocalDateTime loggedOffAt;
 
-    private LocalDateTime lastFailedAttempt;
+    private LocalDateTime lastFailedAttemptAt;
 
     private int failedAttempts;
 
     private String passwordResetToken;
+
+    private String verificationCode;
+
+    private LocalDateTime verificationCodeExpiredAt;
 
     private LocalDateTime passwordResetTokenExpiry;
 
@@ -56,11 +60,20 @@ public class Account extends AbstractUUIDEntity {
     @Setter(AccessLevel.NONE)
     private Set<Role> roles = new HashSet<>();
 
-    public Account(final String username, final String email, final String password, final Boolean isActive, final Boolean isLocked) {
+    public Account(final String username, final String email, final String password, final Boolean isEnabled, final Boolean isLocked) {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.isActive = isActive;
+        this.isEnabled = isEnabled;
         this.isLocked = isLocked;
+    }
+
+    public Account(final String username, final String email, final String password, final Boolean isEnabled, final Boolean isLocked, Set<Role> roles) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.isEnabled = isEnabled;
+        this.isLocked = isLocked;
+        this.roles = roles;
     }
 }
