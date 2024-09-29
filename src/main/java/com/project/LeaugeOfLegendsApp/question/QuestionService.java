@@ -3,7 +3,7 @@ package com.project.LeaugeOfLegendsApp.question;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.LeaugeOfLegendsApp.auth.UserFacade;
 import com.project.LeaugeOfLegendsApp.auth.domain.User;
-import com.project.LeaugeOfLegendsApp.auth.dto.UserResponse;
+import com.project.LeaugeOfLegendsApp.auth.dto.UserWithAccount;
 import com.project.LeaugeOfLegendsApp.category.Category;
 import com.project.LeaugeOfLegendsApp.category.CategoryRepository;
 import com.project.LeaugeOfLegendsApp.difficulty.Difficulty;
@@ -47,7 +47,7 @@ public class QuestionService {
 
     public Question createQuestion(Question questionObject) {
 
-        UserResponse user = userFacade
+        UserWithAccount user = userFacade
                 .findByUsername(
                         SecurityContextHolder.getContextHolderStrategy().getContext().getAuthentication().getName());
 
@@ -83,7 +83,7 @@ public class QuestionService {
 
         questionsObject.stream().forEach(x -> {
 
-            UserResponse user = userFacade
+            UserWithAccount user = userFacade
                     .findByUsername(
                             SecurityContextHolder.getContextHolderStrategy().getContext().getAuthentication().getName());
 
