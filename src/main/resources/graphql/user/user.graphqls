@@ -1,9 +1,10 @@
 type User {
 	 id: ID!
-	 username: String
-	 email: String
-	 password: String
-	 roles: [Role]
+	 name: String
+	 secondName: String
+	 surname: String
+	 yearOfBirth: Int
+	 account: Account
 }
 
 
@@ -17,6 +18,10 @@ input RoleUuidForm {
 }
 
 input CreateUserForm {
+ name: String!,
+ secondName: String,
+ surname: String!
+ yearOfBirth: Int!
  username: String!,
  email: String!
  password: String!
@@ -35,15 +40,31 @@ input FilterUserForm {
 
 type UserResponse {
  uuid: UUID
- username: String
- roles: [RoleResponse]
+ name: String
+ secondName: String
+ surname: String
+ yearOfBirth: Int
+ account: AccountResponse
 }
 
 type JwtResponse {
 	 token: String
-	 id: String
+}
+
+type UserWithAccount {
+	 userUuid: UUID
+	 accountUuid: UUID
 	 username: String
+	 password: String
 	 email: String
 	 roles: [String]
+	 isEnabled: Boolean
+	 isLocked: Boolean
+	 isTwoFactorEnabled: Boolean
+}
+
+input VerifyUserForm {
+ 	 email: String
+	 verificationCode: String
 }
 
