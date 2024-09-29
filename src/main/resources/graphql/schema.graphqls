@@ -8,6 +8,8 @@ scalar Upload
 scalar UUID
 scalar Long
 scalar Void
+scalar DateTime
+scalar Date
 
 type Query {
 	getAllRoles(filterForm: FilterRoleForm, pageableRequest: PageableRequest): PageDto
@@ -15,7 +17,7 @@ type Query {
 	getAllPermissions(filterForm: FilterPermissionForm, pageableRequest: PageableRequest): PageDto
 	getPermissionByUuid(uuid: UUID): PermissionResponse
     getAllUsers(filterForm: FilterUserForm, pageableRequest: PageableRequest): PageDto
-    findByUsername(username: String): User
+    findByUsername(username: String): UserWithAccount
     findUserByUuid(uuid: UUID): UserResponse
 
 
@@ -43,6 +45,8 @@ type Mutation {
 	deleteUserRole(uuid: UUID, uuids: RoleUuidForm): Void
     registerUser(createForm: CreateUserForm): UserResponse
 	authenticateUser(loginRequest: LoginRequest): JwtResponse
+	verifyUser(verifyUserForm: VerifyUserForm): Void
+	resendVerificationCode(email: String): Void
 
 
 	createCategory(name: CategoryInput): Category
