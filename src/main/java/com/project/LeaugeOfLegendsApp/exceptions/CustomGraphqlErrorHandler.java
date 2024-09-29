@@ -28,6 +28,14 @@ public class CustomGraphqlErrorHandler extends DataFetcherExceptionResolverAdapt
                     .location(env.getField().getSourceLocation())
                     .build();
         }
+        else if (ex instanceof AlreadyVerifiedException) {
+            graphQLError = GraphqlErrorBuilder.newError()
+                    .errorType(ErrorType.INTERNAL_ERROR)
+                    .message(ex.getMessage())
+                    .path(env.getExecutionStepInfo().getPath())
+                    .location(env.getField().getSourceLocation())
+                    .build();
+        }
         return graphQLError;
     }
 }
