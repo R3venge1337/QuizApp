@@ -19,6 +19,8 @@ public interface AccountFacade {
 
     AccountResponse findByUuid(final UUID uuid);
 
+    AccountResponse findByVerificationCode(final String verificationCode);
+
     void assignRolesToAccount(final UUID accountUuid, final RoleUuidForm uuids);
 
     void unassignRolesToAccount(final UUID accountUuid, final RoleUuidForm uuids);
